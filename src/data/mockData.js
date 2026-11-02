@@ -1,7 +1,7 @@
 export const currentUser = {
   name: "Easin Arafat",
   role: "Free Account",
-  avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
   email: "easin.arafat@base.io"
 };
 
@@ -129,6 +129,7 @@ export const topSellingProductsData = [
   },
 ];
 
+// Exact invoices from Figma image 3 & 4
 export const initialInvoices = [
   {
     id: "876364",
@@ -229,6 +230,102 @@ export const initialInvoices = [
     starred: false,
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face",
     amount: "$2,890.00",
+  },
+];
+
+// Exact Schedule List from Figma Image 5
+export const initialScheduleList = [
+  {
+    id: "sch-1",
+    date: "12 Dec, 2021",
+    time: "10.15AM",
+    location: "Office Meeting",
+    checked: false,
+  },
+  {
+    id: "sch-2",
+    date: "10 Dec, 2021",
+    time: "11.20AM",
+    location: "Home",
+    checked: false,
+  },
+  {
+    id: "sch-3",
+    date: "09 Dec, 2021",
+    time: "11.45AM",
+    location: "Friends Zone",
+    checked: false,
+  },
+  {
+    id: "sch-4",
+    date: "08 Dec, 2021",
+    time: "12.15PM",
+    location: "Office Meeting",
+    checked: false,
+  },
+  {
+    id: "sch-5",
+    date: "07 Dec, 2021",
+    time: "01.20PM",
+    location: "Home",
+    checked: false,
+  },
+  {
+    id: "sch-6",
+    date: "05 Dec, 2021",
+    time: "10.15AM",
+    location: "Meeting Outside",
+    checked: false,
+  },
+  {
+    id: "sch-7",
+    date: "04 Dec, 2021",
+    time: "11.15AM",
+    location: "Office Meeting",
+    checked: false,
+  },
+  {
+    id: "sch-8",
+    date: "04 Dec, 2021",
+    time: "01.25PM",
+    location: "Home",
+    checked: false,
+  },
+  {
+    id: "sch-9",
+    date: "02 Dec, 2021",
+    time: "10.15AM",
+    location: "Friends",
+    checked: false,
+  },
+  {
+    id: "sch-10",
+    date: "01 Dec, 2021",
+    time: "04.30PM",
+    location: "Meeting Outside",
+    checked: false,
+  },
+];
+
+// People in schedule sub-panel from Image 5
+export const schedulePeople = [
+  {
+    id: 1,
+    name: "Eddie Lobanovskiy",
+    email: "labanovskiy@gmail.com",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    id: 2,
+    name: "Alexey Stave",
+    email: "alexeyst@gmail.com",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    id: 3,
+    name: "Anton Tkachev",
+    email: "tkachevanton@gmail.com",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
   },
 ];
 

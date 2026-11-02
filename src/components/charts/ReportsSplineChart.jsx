@@ -16,14 +16,14 @@ const CustomDot = ({ cx, cy, payload, activeIndex, index }) => {
   const isSelected = activeIndex === index || (!activeIndex && payload.highlighted);
 
   return (
-    <g>
+    <g key={`dot-${index}`}>
       <circle
         cx={cx}
         cy={cy}
-        r={isSelected ? 6 : 4.5}
+        r={isSelected ? 5.5 : 4}
         fill="#FFFFFF"
         stroke="#8B5CF6"
-        strokeWidth={isSelected ? 3 : 2.5}
+        strokeWidth={2.5}
         className="transition-all duration-200"
       />
       {isSelected && (
@@ -42,7 +42,7 @@ const CustomDot = ({ cx, cy, payload, activeIndex, index }) => {
   );
 };
 
-// Custom Tooltip matching the dark Figma tooltip ("Sales \n 2,678")
+// Custom Tooltip matching the Figma black box tooltip ("Sales \n 2,678")
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
@@ -52,7 +52,6 @@ const CustomTooltip = ({ active, payload }) => {
           <p className="text-[10px] text-gray-300 font-medium">Sales</p>
           <p className="text-xs font-bold tracking-tight">{data.amount || '2,678'}</p>
         </div>
-        {/* Downward triangle pointer */}
         <div className="w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-[#111827]" />
       </div>
     );
@@ -65,15 +64,12 @@ export default function ReportsSplineChart() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card relative flex flex-col h-full">
+    <div className="bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card relative flex flex-col h-full justify-between">
       {/* Card Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h3 className="text-base sm:text-lg font-bold text-[#111827]">
-            Reports
-          </h3>
-          <p className="text-xs text-[#64748B]">Hourly transaction activity</p>
-        </div>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-base sm:text-lg font-bold text-[#111827]">
+          Reports
+        </h3>
 
         <div className="relative">
           <button
@@ -105,7 +101,7 @@ export default function ReportsSplineChart() {
         </div>
       </div>
 
-      {/* Recharts Area Chart with Cyan-to-Purple Gradient Stroke */}
+      {/* Spline Area Chart with Cyan-to-Purple-to-Pink Gradient */}
       <div className="w-full h-72 sm:h-80 -ml-3">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
@@ -119,7 +115,6 @@ export default function ReportsSplineChart() {
             onMouseLeave={() => setActiveIndex(5)}
           >
             <defs>
-              {/* Gradient for the spline line stroke (cyan -> blue -> purple -> magenta) */}
               <linearGradient id="splineStroke" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#38BDF8" />
                 <stop offset="35%" stopColor="#6366F1" />
@@ -127,9 +122,8 @@ export default function ReportsSplineChart() {
                 <stop offset="100%" stopColor="#EC4899" />
               </linearGradient>
 
-              {/* Very soft area fill gradient underneath */}
               <linearGradient id="areaGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#A855F7" stopOpacity={0.12} />
+                <stop offset="0%" stopColor="#A855F7" stopOpacity={0.08} />
                 <stop offset="90%" stopColor="#38BDF8" stopOpacity={0.01} />
                 <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0.0} />
               </linearGradient>
@@ -138,7 +132,7 @@ export default function ReportsSplineChart() {
             <CartesianGrid
               strokeDasharray="3 3"
               vertical={false}
-              stroke="#F1F5F9"
+              stroke="#F8FAFC"
             />
 
             <XAxis

@@ -11,12 +11,9 @@ export default function AnalyticsDonutChart() {
     <div className="bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card relative flex flex-col h-full justify-between">
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
-        <div>
-          <h3 className="text-base sm:text-lg font-bold text-[#111827]">
-            Analytics
-          </h3>
-          <p className="text-xs text-[#64748B]">Transaction distribution</p>
-        </div>
+        <h3 className="text-base sm:text-lg font-bold text-[#111827]">
+          Analytics
+        </h3>
 
         <div className="relative">
           <button
@@ -56,13 +53,13 @@ export default function AnalyticsDonutChart() {
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={72}
+              innerRadius={70}
               outerRadius={95}
-              paddingAngle={4}
+              paddingAngle={3}
               dataKey="value"
               startAngle={90}
               endAngle={-270}
-              cornerRadius={8}
+              cornerRadius={10}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
@@ -87,7 +84,7 @@ export default function AnalyticsDonutChart() {
           <span className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
             {analyticsTransactions.percentage}%
           </span>
-          <span className="text-xs font-medium text-[#64748B]">
+          <span className="text-xs font-medium text-[#64748B] mt-0.5">
             {analyticsTransactions.label}
           </span>
         </div>
@@ -101,7 +98,7 @@ export default function AnalyticsDonutChart() {
               className="w-2.5 h-2.5 rounded-full"
               style={{ backgroundColor: item.color }}
             />
-            <span className="text-slate-700 font-semibold">{item.name}</span>
+            <span className="text-slate-700 font-medium">{item.name}</span>
           </div>
         ))}
       </div>

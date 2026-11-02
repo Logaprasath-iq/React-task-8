@@ -1,394 +1,300 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import {
-  Filter,
-  CheckCircle2,
-  Circle,
-  MoreHorizontal,
-  MessageSquare,
-  Heart,
-  Plus,
-  ArrowRight,
+  Calendar as CalendarIcon,
   Clock,
-  Calendar,
-  Layers
+  MapPin,
+  Edit2,
+  Trash2,
+  Search,
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+  Briefcase,
+  Check
 } from 'lucide-react';
-import StatusBadge from '../components/common/StatusBadge';
-import { initialBoardTasks } from '../data/mockData';
+import { initialScheduleList, schedulePeople } from '../data/mockData';
 
 export default function Schedule() {
-  const { searchTerm, openAddTask } = useOutletContext();
-  const [tasks, setTasks] = useState(initialBoardTasks);
-  const [viewMode, setViewMode] = useState('Board'); // 'List' | 'Board' | 'Timeline'
-  const [priorityFilter, setPriorityFilter] = useState('All');
-  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+  const { openAddTask } = useOutletContext();
+  const [schedules, setSchedules] = useState(initialScheduleList);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [peopleSearch, setPeopleSearch] = useState('');
+  const [selectedDate, setSelectedDate] = useState(3); // Dec 3 active in Image 5
 
-  // Filter tasks based on search & priority
-  const filterList = (taskList) => {
-    return taskList.filter((task) => {
-      const matchesSearch =
-        searchTerm === '' ||
-        task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.description.toLowerCase().includes(searchTerm.toLowerCase());
+  // Filter people
+  const filteredPeople = schedulePeople.filter(
+    (p) =>
+      p.name.toLowerCase().includes(peopleSearch.toLowerCase()) ||
+      p.email.toLowerCase().includes(peopleSearch.toLowerCase())
+  );
 
-      const matchesPriority =
-        priorityFilter === 'All' || task.priority === priorityFilter;
-
-      return matchesSearch && matchesPriority;
-    });
+  // Toggle row checkbox
+  const handleToggleRow = (id) => {
+    if (selectedIds.includes(id)) {
+      setSelectedIds(selectedIds.filter((item) => item !== id));
+    } else {
+      setSelectedIds([...selectedIds, id]);
+    }
   };
 
-  // Move task to next column
-  const handleMoveTask = (fromCol, toCol, taskId) => {
-    const taskToMove = tasks[fromCol].find((t) => t.id === taskId);
-    if (!taskToMove) return;
-
-    setTasks({
-      ...tasks,
-      [fromCol]: tasks[fromCol].filter((t) => t.id !== taskId),
-      [toCol]: [...tasks[toCol], taskToMove],
-    });
+  // Toggle all checkboxes
+  const handleToggleAll = () => {
+    if (selectedIds.length === schedules.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(schedules.map((s) => s.id));
+    }
   };
 
-  // Columns definition
-  const columns = [
-    { id: 'todo', label: 'ToDo', next: 'inProgress' },
-    { id: 'inProgress', label: 'In Progress', next: 'inReview' },
-    { id: 'inReview', label: 'In Review', next: 'done' },
-    { id: 'done', label: 'Done', next: null },
+  // Delete row
+  const handleDeleteRow = (id) => {
+    setSchedules(schedules.filter((s) => s.id !== id));
+  };
+
+  // Mini calendar data for Dec 2021
+  const daysHeader = ['S', 'S', 'M', 'T', 'W', 'T', 'F'];
+  const calendarGrid = [
+    [29, 30, 1, 2, 3, 4, 5],
+    [6, 7, 8, 9, 10, 11, 12],
+    [13, 14, 15, 16, 17, 18, 19],
+    [20, 21, 22, 23, 24, 25, 26],
+    [27, 28, 29, 30, 31, 1, 2],
   ];
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Top Controls: View Switcher (List | Board | Timeline) and Filter */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        {/* View Switcher Pills (Matching Figma preview 5) */}
-        <div className="inline-flex bg-white p-1 rounded-2xl border border-[#F1F5F9] shadow-sm">
-          {['List', 'Board', 'Timeline'].map((mode) => (
-            <button
-              key={mode}
-              type="button"
-              onClick={() => setViewMode(mode)}
-              className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all ${
-                viewMode === mode
-                  ? 'bg-[#5046E5] text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-              }`}
-            >
-              {mode}
-            </button>
-          ))}
-        </div>
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-in fade-in duration-300">
+      {/* Left Column: Sub-panel matching Image 5 (Create Schedule, Mini Calendar, People, My Schedule) */}
+      <div className="lg:col-span-4 bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-6">
+        {/* + Create Schedule Button */}
+        <button
+          type="button"
+          onClick={openAddTask}
+          className="w-full py-3 px-4 bg-[#5046E5] hover:bg-[#4338CA] text-white text-xs sm:text-sm font-bold rounded-2xl shadow-md shadow-indigo-100 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+        >
+          <Plus size={16} />
+          <span>Create Schedule</span>
+        </button>
 
-        {/* Filter Dropdown Button */}
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-              className="flex items-center gap-2 px-4 py-2 bg-[#5046E5] hover:bg-[#4338CA] text-white text-xs sm:text-sm font-semibold rounded-xl shadow-sm transition-all"
-            >
-              <Filter size={15} />
-              <span>Filter</span>
-            </button>
-
-            {showFilterDropdown && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-dropdown p-2 z-30 text-xs">
-                <p className="px-3 py-1 font-semibold text-gray-400 text-[10px] uppercase">
-                  Filter by Priority
-                </p>
-                {['All', 'Low', 'Medium', 'High'].map((p) => (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => {
-                      setPriorityFilter(p);
-                      setShowFilterDropdown(false);
-                    }}
-                    className={`w-full text-left px-3 py-1.5 rounded-lg ${
-                      priorityFilter === p
-                        ? 'bg-indigo-50 text-indigo-600 font-semibold'
-                        : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    {p} Priority
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={openAddTask}
-            className="flex items-center gap-1.5 px-4 py-2 bg-white border border-[#E2E8F0] hover:border-indigo-400 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl shadow-sm transition-all"
-          >
-            <Plus size={16} className="text-indigo-600" />
-            <span>Add Task</span>
-          </button>
-        </div>
-      </div>
-
-      {/* VIEW 1: KANBAN BOARD (Default from Figma preview 5) */}
-      {viewMode === 'Board' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
-          {columns.map((col) => {
-            const colTasks = filterList(tasks[col.id] || []);
-            return (
-              <div key={col.id} className="flex flex-col space-y-4">
-                {/* Column Title */}
-                <div className="flex items-center justify-between px-1">
-                  <h3 className="font-bold text-base text-[#111827]">
-                    {col.label}
-                  </h3>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-200/70 text-slate-600">
-                    {colTasks.length}
-                  </span>
-                </div>
-
-                {/* Cards Container */}
-                <div className="space-y-4 min-h-[400px]">
-                  {colTasks.map((task) => (
-                    <div
-                      key={task.id}
-                      className="bg-white rounded-3xl p-5 border border-[#F1F5F9] shadow-card hover:shadow-card-hover transition-all duration-200 group flex flex-col justify-between"
-                    >
-                      {/* Top Row: Radio/Check + Title + Options */}
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <div className="flex items-center gap-2 min-w-0">
-                          {col.id === 'done' ? (
-                            <CheckCircle2
-                              size={18}
-                              className="text-indigo-600 fill-indigo-100 flex-shrink-0"
-                            />
-                          ) : (
-                            <Circle
-                              size={18}
-                              className="text-gray-300 hover:text-indigo-600 flex-shrink-0 cursor-pointer"
-                              onClick={() => {
-                                if (col.next) {
-                                  handleMoveTask(col.id, col.next, task.id);
-                                }
-                              }}
-                            />
-                          )}
-                          <h4 className="font-bold text-xs sm:text-sm text-slate-900 truncate">
-                            {task.title}
-                          </h4>
-                        </div>
-
-                        <button
-                          type="button"
-                          className="text-gray-400 hover:text-slate-700 p-1"
-                        >
-                          <MoreHorizontal size={16} />
-                        </button>
-                      </div>
-
-                      {/* Badges: Priority & Health */}
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <StatusBadge status={task.priority} type="priority" />
-                        <StatusBadge status={task.status} type="health" />
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-xs text-[#64748B] mb-3 line-clamp-2">
-                        {task.description}
-                      </p>
-
-                      {/* Graphical Attachment Preview (if present) */}
-                      {task.previewGraphic && (
-                        <div className="mb-3 rounded-2xl overflow-hidden border border-slate-100 max-h-36">
-                          <img
-                            src={task.previewGraphic}
-                            alt="Preview graphic"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                      )}
-
-                      {task.attachments && task.attachments.length > 0 && (
-                        <div className="grid grid-cols-2 gap-2 mb-3">
-                          {task.attachments.map((img, i) => (
-                            <div
-                              key={i}
-                              className="rounded-xl overflow-hidden border border-slate-100 h-16"
-                            >
-                              <img
-                                src={img}
-                                alt="Attachment"
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Bottom Row: Assignee Stack & Metrics */}
-                      <div className="flex items-center justify-between pt-3 border-t border-slate-50 mt-1">
-                        {/* Assignee Avatar Stack */}
-                        <div className="flex items-center -space-x-2">
-                          {(task.assignees || []).map((avatar, idx) => (
-                            <img
-                              key={idx}
-                              src={avatar}
-                              alt="Assignee"
-                              className="w-7 h-7 rounded-full object-cover ring-2 ring-white"
-                            />
-                          ))}
-                          <button
-                            type="button"
-                            className="w-7 h-7 rounded-full bg-[#00D2D3] text-white flex items-center justify-center text-xs font-bold ring-2 ring-white hover:opacity-90"
-                            title="Add assignee"
-                          >
-                            +
-                          </button>
-                        </div>
-
-                        {/* Comments & Likes */}
-                        <div className="flex items-center gap-3 text-gray-400 text-xs">
-                          <div className="flex items-center gap-1">
-                            <MessageSquare size={14} />
-                            <span>{task.comments}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Heart size={14} />
-                            <span>{task.likes}</span>
-                          </div>
-
-                          {/* Quick Advance Button */}
-                          {col.next && (
-                            <button
-                              type="button"
-                              onClick={() => handleMoveTask(col.id, col.next, task.id)}
-                              className="text-gray-300 hover:text-indigo-600 transition-colors ml-1"
-                              title={`Advance to ${col.next}`}
-                            >
-                              <ArrowRight size={14} />
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* VIEW 2: LIST VIEW */}
-      {viewMode === 'List' && (
-        <div className="bg-white rounded-3xl border border-[#F1F5F9] shadow-card overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[700px]">
-              <thead>
-                <tr className="border-b border-gray-100 bg-slate-50/50 text-xs font-semibold text-[#64748B]">
-                  <th className="py-4 pl-6 pr-3">Task Title</th>
-                  <th className="py-4 px-3">Column</th>
-                  <th className="py-4 px-3">Priority</th>
-                  <th className="py-4 px-3">Status</th>
-                  <th className="py-4 px-3">Assignees</th>
-                  <th className="py-4 pr-6 pl-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50 text-xs sm:text-sm font-medium">
-                {columns.flatMap((col) =>
-                  filterList(tasks[col.id] || []).map((t) => (
-                    <tr key={t.id} className="hover:bg-slate-50/70">
-                      <td className="py-4 pl-6 pr-3 font-semibold text-slate-900">
-                        {t.title}
-                      </td>
-                      <td className="py-4 px-3 text-slate-500 font-medium">
-                        {col.label}
-                      </td>
-                      <td className="py-4 px-3">
-                        <StatusBadge status={t.priority} type="priority" />
-                      </td>
-                      <td className="py-4 px-3">
-                        <StatusBadge status={t.status} type="health" />
-                      </td>
-                      <td className="py-4 px-3">
-                        <div className="flex items-center -space-x-2">
-                          {(t.assignees || []).map((av, idx) => (
-                            <img
-                              key={idx}
-                              src={av}
-                              alt="Assignee"
-                              className="w-6 h-6 rounded-full object-cover ring-2 ring-white"
-                            />
-                          ))}
-                        </div>
-                      </td>
-                      <td className="py-4 pr-6 pl-3 text-right">
-                        {col.next ? (
-                          <button
-                            type="button"
-                            onClick={() => handleMoveTask(col.id, col.next, t.id)}
-                            className="text-xs font-semibold text-indigo-600 hover:underline"
-                          >
-                            Move Next →
-                          </button>
-                        ) : (
-                          <span className="text-emerald-600 font-semibold text-xs">
-                            Done ✓
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* VIEW 3: TIMELINE (GANTT) VIEW */}
-      {viewMode === 'Timeline' && (
-        <div className="bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-            <div>
-              <h3 className="font-bold text-base text-[#111827]">
-                Sprint Roadmap & Milestones
-              </h3>
-              <p className="text-xs text-[#64748B]">Q4 Product Engineering Timeline</p>
+        {/* Mini Calendar Widget */}
+        <div className="bg-white rounded-2xl border border-slate-100 p-4 shadow-2xs">
+          <div className="flex items-center justify-between pb-3 mb-2 border-b border-gray-50 text-xs font-bold text-slate-800">
+            <span>December 2, 2021</span>
+            <div className="flex items-center gap-1 text-slate-400">
+              <button type="button" className="p-1 hover:text-slate-600">
+                <ChevronLeft size={14} />
+              </button>
+              <button type="button" className="p-1 hover:text-slate-600">
+                <ChevronRight size={14} />
+              </button>
             </div>
-            <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-indigo-50 text-indigo-600">
-              Nov 2026 - Dec 2026
-            </span>
           </div>
 
-          <div className="space-y-4">
-            {[
-              { title: 'Dashboard UI Revamp', start: '10%', width: '45%', col: '#6366F1', phase: 'Sprint 1' },
-              { title: 'Payment & Invoice Gateway', start: '30%', width: '35%', col: '#10B981', phase: 'Sprint 2' },
-              { title: 'Mobile React Native App', start: '50%', width: '40%', col: '#F59E0B', phase: 'Sprint 3' },
-              { title: 'Security Audit & Compliance', start: '75%', width: '20%', col: '#EC4899', phase: 'Sprint 4' },
-            ].map((item, idx) => (
-              <div key={idx} className="space-y-1.5">
-                <div className="flex justify-between text-xs font-medium text-slate-700">
-                  <span className="font-bold">{item.title}</span>
-                  <span className="text-slate-400">{item.phase}</span>
-                </div>
-                <div className="w-full h-8 bg-slate-50 rounded-xl relative overflow-hidden border border-slate-100">
-                  <div
-                    className="absolute top-1 bottom-1 rounded-lg text-white text-[10px] font-bold flex items-center px-3 shadow-sm transition-all duration-300"
-                    style={{
-                      left: item.start,
-                      width: item.width,
-                      backgroundColor: item.col,
-                    }}
-                  >
-                    Active Progress
-                  </div>
+          <div className="grid grid-cols-7 gap-1 text-center mb-1 text-[11px] font-semibold text-slate-400">
+            {daysHeader.map((d, i) => (
+              <span key={i}>{d}</span>
+            ))}
+          </div>
+
+          <div className="space-y-1 text-center text-xs">
+            {calendarGrid.map((week, wIdx) => (
+              <div key={wIdx} className="grid grid-cols-7 gap-1">
+                {week.map((dayNum, dIdx) => {
+                  const isActive = dayNum === 3 && wIdx === 0;
+                  const isMuted = (wIdx === 0 && dayNum > 20) || (wIdx === 4 && dayNum < 5);
+
+                  return (
+                    <button
+                      key={dIdx}
+                      type="button"
+                      onClick={() => setSelectedDate(dayNum)}
+                      className={`w-7 h-7 mx-auto rounded-full flex items-center justify-center font-medium transition-all ${
+                        isActive
+                          ? 'bg-[#5046E5] text-white font-bold shadow-sm'
+                          : isMuted
+                          ? 'text-slate-300'
+                          : 'text-slate-700 hover:bg-indigo-50 hover:text-indigo-600'
+                      }`}
+                    >
+                      {dayNum}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* People Section */}
+        <div className="space-y-3">
+          <h3 className="font-bold text-sm text-[#111827]">People</h3>
+
+          {/* Search for People */}
+          <div className="relative">
+            <Search
+              size={14}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+            />
+            <input
+              type="text"
+              placeholder="Search for People"
+              value={peopleSearch}
+              onChange={(e) => setPeopleSearch(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none"
+            />
+          </div>
+
+          {/* People List */}
+          <div className="space-y-2.5 pt-1">
+            {filteredPeople.map((person) => (
+              <div
+                key={person.id}
+                className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer"
+              >
+                <img
+                  src={person.avatar}
+                  alt={person.name}
+                  className="w-9 h-9 rounded-full object-cover ring-1 ring-slate-100 flex-shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                    {person.name}
+                  </h4>
+                  <p className="text-[11px] text-slate-400 truncate">
+                    {person.email}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      )}
+
+        {/* My Schedule Button */}
+        <button
+          type="button"
+          onClick={() => alert('Viewing your personal schedule assignments...')}
+          className="w-full py-2.5 px-4 bg-white border border-slate-200 hover:border-indigo-500 text-xs font-bold text-slate-700 hover:text-indigo-600 rounded-xl transition-colors shadow-2xs"
+        >
+          My Schedule
+        </button>
+      </div>
+
+      {/* Right Column: Schedule List Table matching Image 5 */}
+      <div className="lg:col-span-8 bg-white rounded-3xl border border-[#F1F5F9] shadow-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[620px]">
+            <thead>
+              <tr className="border-b border-gray-100 text-[11px] sm:text-xs font-semibold text-[#94A3B8]">
+                {/* Master Checkbox */}
+                <th className="py-5 pl-8 pr-2 w-12">
+                  <div
+                    onClick={handleToggleAll}
+                    className={`w-4 h-4 rounded-md border flex items-center justify-center cursor-pointer transition-colors ${
+                      selectedIds.length === schedules.length
+                        ? 'bg-[#5046E5] border-[#5046E5] text-white'
+                        : 'border-gray-300 bg-white hover:border-indigo-400'
+                    }`}
+                  >
+                    {selectedIds.length === schedules.length && (
+                      <Check size={12} strokeWidth={3} />
+                    )}
+                  </div>
+                </th>
+                <th className="py-5 px-4 font-semibold text-[#64748B]">
+                  Date <span className="text-gray-400 font-normal">▾</span>
+                </th>
+                <th className="py-5 px-4 font-semibold text-[#64748B]">
+                  Time <span className="text-gray-400 font-normal">▾</span>
+                </th>
+                <th className="py-5 px-4 font-semibold text-[#64748B]">
+                  Location <span className="text-gray-400 font-normal">▾</span>
+                </th>
+                <th className="py-5 pr-8 pl-4 text-right">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-gray-50 text-xs sm:text-sm font-medium">
+              {schedules.map((item) => {
+                const isSelected = selectedIds.includes(item.id);
+
+                return (
+                  <tr
+                    key={item.id}
+                    className="hover:bg-slate-50/70 transition-colors group"
+                  >
+                    {/* Checkbox */}
+                    <td className="py-4 pl-8 pr-2">
+                      <div
+                        onClick={() => handleToggleRow(item.id)}
+                        className={`w-4 h-4 rounded-md border flex items-center justify-center cursor-pointer transition-colors ${
+                          isSelected
+                            ? 'bg-[#5046E5] border-[#5046E5] text-white'
+                            : 'border-gray-300 bg-white hover:border-indigo-400'
+                        }`}
+                      >
+                        {isSelected && <Check size={12} strokeWidth={3} />}
+                      </div>
+                    </td>
+
+                    {/* Date with Blue Briefcase/Calendar icon */}
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-2.5 text-slate-800">
+                        <div className="w-5 h-5 rounded-md bg-blue-50 text-blue-500 flex items-center justify-center flex-shrink-0">
+                          <Briefcase size={12} />
+                        </div>
+                        <span className="font-semibold">{item.date}</span>
+                      </div>
+                    </td>
+
+                    {/* Time with Clock icon */}
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <Clock size={14} className="text-slate-400" />
+                        <span className="font-medium">{item.time}</span>
+                      </div>
+                    </td>
+
+                    {/* Location Pill Badge (e.g. Office Meeting, Home, Friends Zone) */}
+                    <td className="py-4 px-4">
+                      <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#EEF2FF] text-[#5046E5]">
+                        <MapPin size={12} className="text-[#5046E5]" />
+                        <span>{item.location}</span>
+                      </div>
+                    </td>
+
+                    {/* Yellow Edit Circle & Red Trash Circle Buttons */}
+                    <td className="py-4 pr-8 pl-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        {/* Edit Yellow Circle */}
+                        <button
+                          type="button"
+                          onClick={() => alert(`Edit schedule on ${item.date}`)}
+                          className="w-7 h-7 rounded-full bg-[#FEF3C7] text-[#D97706] hover:bg-amber-200 flex items-center justify-center transition-colors"
+                          title="Edit"
+                        >
+                          <Edit2 size={12} />
+                        </button>
+
+                        {/* Delete Red Circle */}
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteRow(item.id)}
+                          className="w-7 h-7 rounded-full bg-[#FEE2E2] text-[#DC2626] hover:bg-rose-200 flex items-center justify-center transition-colors"
+                          title="Delete"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

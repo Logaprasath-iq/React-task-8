@@ -2,3 +2,10 @@ node_modules/
 dist/
 .env
 .env.local
+
+# Scratch reference downloads
+preview_*.webp
+figma_*.png
+saas_design_page.html
+extract_images.js
+download_previews.js

@@ -12,8 +12,6 @@ export default function DashboardLayout() {
 
   // Global search & date range filters
   const [searchTerm, setSearchTerm] = useState('');
-  const [startDate, setStartDate] = useState('2021-06-10');
-  const [endDate, setEndDate] = useState('2021-10-10');
 
   // Modals state
   const [isCreateInvoiceOpen, setIsCreateInvoiceOpen] = useState(false);
@@ -30,10 +28,10 @@ export default function DashboardLayout() {
         setIsMobileOpen={setIsMobileOpen}
       />
 
-      {/* Main Wrapper: adjusts left margin based on collapsed sidebar */}
+      {/* Main Content Area */}
       <div
         className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${
-          isCollapsed ? 'lg:ml-20' : 'lg:ml-64'
+          isCollapsed ? 'lg:ml-[76px]' : 'lg:ml-64'
         }`}
       >
         {/* Header */}
@@ -42,22 +40,16 @@ export default function DashboardLayout() {
           setIsMobileOpen={setIsMobileOpen}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
-          startDate={startDate}
-          setStartDate={setStartDate}
-          endDate={endDate}
-          setEndDate={setEndDate}
           onOpenCreateInvoice={() => setIsCreateInvoiceOpen(true)}
           onOpenCreateEvent={() => setIsCreateEventOpen(true)}
-          onOpenAddTask={() => setIsAddTaskOpen(true)}
+          onOpenCreateSchedule={() => setIsAddTaskOpen(true)}
         />
 
-        {/* Content Outlet */}
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 pb-10">
+        {/* Page Content */}
+        <main className="flex-1 px-6 sm:px-8 pb-10">
           <Outlet
             context={{
               searchTerm,
-              startDate,
-              endDate,
               openCreateInvoice: () => setIsCreateInvoiceOpen(true),
               openCreateEvent: () => setIsCreateEventOpen(true),
               openAddTask: () => setIsAddTaskOpen(true),
