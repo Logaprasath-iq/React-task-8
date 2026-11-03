@@ -12,9 +12,9 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  Zap
 } from 'lucide-react';
 import { currentUser } from '../../data/mockData';
+import UpgradePromoCard from './UpgradePromoCard';
 
 const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutGrid },
@@ -77,7 +77,7 @@ export default function Sidebar({
               </svg>
             </div>
 
-            {/* "Base" text: below circle in collapsed mode, beside in expanded mode */}
+            {/* "Base" text */}
             <span
               className={`font-bold tracking-tight text-[#111827] transition-all ${
                 isCollapsed ? 'text-xs font-semibold mt-1' : 'text-2xl'
@@ -174,30 +174,8 @@ export default function Sidebar({
           })}
         </nav>
 
-        {/* Hanging Lamp Promo Card (Expanded mode) */}
-        {!isCollapsed && (
-          <div className="mx-4 mb-4 p-4 rounded-3xl bg-gradient-to-b from-[#F0F5FF] to-[#E6EEFF] border border-blue-100/50 text-center relative overflow-hidden group shadow-sm">
-            {/* 3D Lamp Illustration matching Figma Preview */}
-            <div className="w-16 h-16 mx-auto mb-2 flex items-center justify-center relative">
-              {/* Lamp Cord */}
-              <div className="absolute top-0 w-[1.5px] h-5 bg-slate-400" />
-              {/* Lamp Cone */}
-              <div className="w-12 h-9 bg-gradient-to-b from-[#3B82F6] to-[#2563EB] rounded-b-2xl shadow-md relative z-10 flex items-center justify-center">
-                <Zap size={16} className="text-white fill-white/80" />
-              </div>
-              {/* Light Glow */}
-              <div className="absolute bottom-0 w-20 h-8 bg-blue-300/40 blur-md rounded-full pointer-events-none" />
-            </div>
-
-            <button
-              type="button"
-              onClick={() => alert('Upgrade modal activated!')}
-              className="w-full py-2.5 px-3 text-xs font-bold text-white bg-[#5046E5] hover:bg-[#4338CA] rounded-xl shadow-md shadow-indigo-200 transition-all active:scale-[0.98]"
-            >
-              Upgrade Now
-            </button>
-          </div>
-        )}
+        {/* Exact Hanging Lamp Promo Card (Expanded mode matching Figma) */}
+        {!isCollapsed && <UpgradePromoCard />}
 
         {/* User Profile & Logout */}
         <div
