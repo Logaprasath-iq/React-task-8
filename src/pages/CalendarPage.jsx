@@ -84,6 +84,131 @@ export default function CalendarPage() {
     ],
   ];
 
+  // 12 Months dataset for 2021 matching Figma media_1793680926178_3625fe68.png "Calendar year"
+  const yearMonths2021 = [
+    {
+      name: 'January 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'February 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'March 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'April 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'May 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'Jun 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'July 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'August 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'September 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'October 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'November 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'December 2021',
+      highlightDay: 2,
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    }
+  ];
+
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Controls: Calendar Title & Day | Week | Month | Year View Switcher matching Screenshot 4 */}
@@ -158,7 +283,132 @@ export default function CalendarPage() {
                     const isMuted =
                       (wIdx === 0 && dayNum > 20) || (wIdx === 4 && dayNum < 5);
 
-                    return (
+                    // 12 Months dataset for 2021 matching Figma media_1793680926178_3625fe68.png "Calendar year"
+  const yearMonths2021 = [
+    {
+      name: 'January 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'February 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'March 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'April 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'May 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'Jun 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'July 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'August 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'September 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'October 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'November 2021',
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    },
+    {
+      name: 'December 2021',
+      highlightDay: 2,
+      weeks: [
+        [28, 29, 30, 31, 1, 2, 3],
+        [4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17],
+        [18, 19, 20, 21, 22, 23, 24],
+        [25, 26, 27, 28, 29, 30, 31],
+      ]
+    }
+  ];
+
+  return (
                       <div
                         key={dIdx}
                         className={`w-7 h-7 mx-auto rounded-full flex items-center justify-center font-medium ${
@@ -227,87 +477,148 @@ export default function CalendarPage() {
           </button>
         </div>
 
-        {/* Right Calendar Month Grid matching Screenshot 4 */}
-        <div className="lg:col-span-8 bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-4">
-          {/* Calendar Month Header: December 2, 2021 with navigation arrows */}
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-            <h3 className="font-bold text-base text-[#111827]">
-              December 2, 2021
-            </h3>
-            <div className="flex items-center gap-1.5 text-slate-400">
-              <button
-                type="button"
-                className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                type="button"
-                className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700"
-              >
-                <ChevronRight size={16} />
-              </button>
+        {/* Right Calendar Area: Year Grid View OR Month Grid View */}
+        {calendarView === 'Year' ? (
+          /* 12-MONTH YEAR VIEW matching Figma media_1793680926178_3625fe68.png "Calendar year" */
+          <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-[#F1F5F9] shadow-card">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
+              {yearMonths2021.map((m, mIdx) => (
+                <div key={mIdx} className="space-y-2">
+                  {/* Month Title Header */}
+                  <h4 className="font-bold text-xs sm:text-sm text-[#111827]">
+                    {m.name}
+                  </h4>
+
+                  {/* Day of Week Letters */}
+                  <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-semibold text-slate-400">
+                    {['S', 'S', 'M', 'T', 'W', 'T', 'F'].map((d, i) => (
+                      <span key={i}>{d}</span>
+                    ))}
+                  </div>
+
+                  {/* Month 5-Week Grid */}
+                  <div className="space-y-1 text-center text-[11px]">
+                    {m.weeks.map((wk, wIdx) => (
+                      <div key={wIdx} className="grid grid-cols-7 gap-1">
+                        {wk.map((dayNum, dIdx) => {
+                          const isMuted =
+                            (wIdx === 0 && dayNum > 20) || (wIdx >= 4 && dayNum < 10);
+                          const isPurpleHighlighted =
+                            m.highlightDay === dayNum && !isMuted;
+
+                          return (
+                            <div
+                              key={dIdx}
+                              className="h-6 flex items-center justify-center"
+                            >
+                              {isPurpleHighlighted ? (
+                                <span className="w-5 h-5 rounded-full bg-[#5046E5] text-white font-bold text-[10px] flex items-center justify-center shadow-sm">
+                                  {dayNum}
+                                </span>
+                              ) : (
+                                <span
+                                  className={`${
+                                    isMuted
+                                      ? 'text-slate-300 font-normal'
+                                      : 'text-slate-700 font-medium hover:text-indigo-600'
+                                  }`}
+                                >
+                                  {dayNum}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+        ) : (
+          /* Calendar Month Grid matching Screenshot 4 */
+          <div className="lg:col-span-8 bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-4">
+            {/* Calendar Month Header: December 2, 2021 with navigation arrows */}
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <h3 className="font-bold text-base text-[#111827]">
+                December 2, 2021
+              </h3>
+              <div className="flex items-center gap-1.5 text-slate-400">
+                <button
+                  type="button"
+                  className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button
+                  type="button"
+                  className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
 
-          {/* Weekday headers */}
-          <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-500 py-1">
-            {daysOfWeek.map((day) => (
-              <span key={day}>{day}</span>
-            ))}
-          </div>
+            {/* Weekday headers */}
+            <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-500 py-1">
+              {daysOfWeek.map((day) => (
+                <span key={day}>{day}</span>
+              ))}
+            </div>
 
-          {/* Calendar Month Cells Grid */}
-          <div className="space-y-2">
-            {monthWeeks.map((week, wIdx) => (
-              <div key={wIdx} className="grid grid-cols-7 gap-2">
-                {week.map((cell, cIdx) => (
-                  <div
-                    key={cIdx}
-                    onClick={() => setIsEventModalOpen(true)}
-                    className={`h-22 sm:h-26 rounded-2xl p-2 border border-slate-100 hover:border-indigo-200 hover:bg-slate-50/60 transition-all cursor-pointer flex flex-col justify-between ${
-                      !cell.isCurrentMonth ? 'bg-slate-50/30' : 'bg-white'
-                    }`}
-                  >
-                    <span
-                      className={`text-xs font-bold ${
-                        !cell.isCurrentMonth
-                          ? 'text-slate-300'
-                          : cell.day === 2
-                          ? 'text-[#FF7A59]'
-                          : 'text-slate-700'
+            {/* Calendar Month Cells Grid */}
+            <div className="space-y-2">
+              {monthWeeks.map((week, wIdx) => (
+                <div key={wIdx} className="grid grid-cols-7 gap-2">
+                  {week.map((cell, cIdx) => (
+                    <div
+                      key={cIdx}
+                      onClick={() => setIsEventModalOpen(true)}
+                      className={`h-22 sm:h-26 rounded-2xl p-2 border border-slate-100 hover:border-indigo-200 hover:bg-slate-50/60 transition-all cursor-pointer flex flex-col justify-between ${
+                        !cell.isCurrentMonth ? 'bg-slate-50/30' : 'bg-white'
                       }`}
                     >
-                      {cell.day < 10 && cell.isCurrentMonth ? `0${cell.day}` : cell.day}
-                    </span>
+                      <span
+                        className={`text-xs font-bold ${
+                          !cell.isCurrentMonth
+                            ? 'text-slate-300'
+                            : cell.day === 2
+                            ? 'text-[#FF7A59]'
+                            : 'text-slate-700'
+                        }`}
+                      >
+                        {cell.day < 10 && cell.isCurrentMonth ? `0${cell.day}` : cell.day}
+                      </span>
 
-                    {/* Event Badges on Cell */}
-                    <div className="space-y-1">
-                      {cell.events &&
-                        cell.events.map((ev, eIdx) =>
-                          ev.isLink ? (
-                            <span
-                              key={eIdx}
-                              className="text-[10px] text-indigo-600 font-semibold block"
-                            >
-                              More
-                            </span>
-                          ) : (
-                            <div
-                              key={eIdx}
-                              className={`text-[10px] font-bold text-white px-1.5 py-0.5 rounded-lg truncate shadow-2xs ${ev.bg}`}
-                            >
-                              {ev.text}
-                            </div>
-                          )
-                        )}
+                      {/* Event Badges on Cell */}
+                      <div className="space-y-1">
+                        {cell.events &&
+                          cell.events.map((ev, eIdx) =>
+                            ev.isLink ? (
+                              <span
+                                key={eIdx}
+                                className="text-[10px] text-indigo-600 font-semibold block"
+                              >
+                                More
+                              </span>
+                            ) : (
+                              <div
+                                key={eIdx}
+                                className={`text-[10px] font-bold text-white px-1.5 py-0.5 rounded-lg truncate shadow-2xs ${ev.bg}`}
+                              >
+                                {ev.text}
+                              </div>
+                            )
+                          )}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ))}
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Centered Create an Event Modal matching Screenshot 4 */}

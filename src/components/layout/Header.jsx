@@ -37,6 +37,8 @@ export default function Header({
         return 'Analytics';
       case '/invoices':
         return 'Invoice List';
+      case '/invoices/create':
+        return 'Create Invoice';
       case '/schedule':
         return 'Schedule List';
       case '/calendar':
@@ -114,7 +116,7 @@ export default function Header({
 
               <button
                 type="button"
-                onClick={onOpenCreateInvoice}
+                onClick={() => navigate('/invoices/create')}
                 className="flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#5046E5] hover:bg-[#4338CA] rounded-xl shadow-sm shadow-indigo-200 transition-all active:scale-95 whitespace-nowrap"
               >
                 <Plus size={16} />

@@ -5,7 +5,12 @@ import {
   MoreHorizontal,
   Plus,
   Award,
-  Activity
+  Activity,
+  ChevronLeft,
+  ChevronDown,
+  Camera,
+  Check,
+  Download
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -18,7 +23,14 @@ import { productAnalyticsData } from '../../data/mockData';
 
 export default function ProductAnalyticsView() {
   const [activeSubTab, setActiveSubTab] = useState('Product');
-  const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [productForm, setProductForm] = useState({
+    name: 'Mackbook Pro 2021 14"',
+    brand: 'Apple',
+    price: '$1200',
+    negotiable: true,
+    description: 'This the New creation Of apple This the New creation Of apple This the New creation Of apple This the New creation Of apple.'
+  });
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
@@ -45,7 +57,7 @@ export default function ProductAnalyticsView() {
         {/* + Add Product Button */}
         <button
           type="button"
-          onClick={() => setShowAddProductModal(true)}
+          onClick={() => setIsDrawerOpen(true)}
           className="flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#5046E5] hover:bg-[#4338CA] rounded-2xl shadow-sm shadow-indigo-100 transition-all active:scale-[0.98] self-start sm:self-auto"
         >
           <Plus size={16} />
@@ -347,68 +359,170 @@ export default function ProductAnalyticsView() {
         </div>
       </div>
 
-      {/* Modal for + Add Product */}
-      {showAddProductModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-gray-100 relative">
-            <h3 className="text-lg font-bold text-slate-900 mb-1">Add New Product</h3>
-            <p className="text-xs text-slate-500 mb-4">Register an inventory SKU in Base</p>
+      {/* Slide-out Drawer for "Add a New Product" matching Figma media_1793680847653_eebe90f1.png */}
+      {isDrawerOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          {/* Dimmed backdrop over the dashboard */}
+          <div
+            onClick={() => setIsDrawerOpen(false)}
+            className="absolute inset-0 bg-[#0F172A]/40 backdrop-blur-[2px] transition-opacity animate-in fade-in duration-200"
+          />
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert('Product added successfully!');
-                setShowAddProductModal(false);
-              }}
-              className="space-y-3 text-xs"
-            >
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Product Title</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Wireless Headset Pro"
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Price ($)</label>
-                  <input
-                    type="number"
-                    required
-                    placeholder="99"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl"
-                  />
+          {/* Right-aligned sliding drawer panel */}
+          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div className="w-screen max-w-[460px] bg-white shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
+              {/* Drawer Content */}
+              <div className="p-6 sm:p-8 flex-1 overflow-y-auto">
+                {/* Header: < Back Arrow + Title "Add a New Product" */}
+                <div className="flex items-center gap-4 pb-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsDrawerOpen(false)}
+                    className="p-1.5 -ml-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors"
+                  >
+                    <ChevronLeft size={22} className="stroke-[2.5]" />
+                  </button>
+                  <h2 className="text-base sm:text-lg font-bold text-[#111827]">
+                    Add a New Product
+                  </h2>
                 </div>
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Stock Count</label>
-                  <input
-                    type="number"
-                    required
-                    placeholder="500"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl"
-                  />
-                </div>
-              </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3">
-                <button
-                  type="button"
-                  onClick={() => setShowAddProductModal(false)}
-                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl font-semibold"
+                {/* Center Circular Camera Photo Upload Placeholder */}
+                <div className="my-6 flex justify-center">
+                  <div className="w-24 h-24 rounded-full bg-[#F4F5F7] flex items-center justify-center text-slate-700 cursor-pointer hover:bg-slate-200/70 transition-all shadow-inner group">
+                    <Camera size={26} className="text-slate-700 group-hover:scale-110 transition-transform stroke-[1.8]" />
+                  </div>
+                </div>
+
+                {/* Product Form Fields matching Figma */}
+                <form
+                  id="addProductDrawerForm"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    alert(`Product "${productForm.name}" created successfully!`);
+                    setIsDrawerOpen(false);
+                  }}
+                  className="space-y-4"
                 >
-                  Cancel
-                </button>
+                  {/* Field 1: Product Name */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                      Product Name
+                    </label>
+                    <input
+                      type="text"
+                      value={productForm.name}
+                      onChange={(e) =>
+                        setProductForm({ ...productForm, name: e.target.value })
+                      }
+                      className="w-full px-4 py-3 bg-[#F8F9FB] border border-transparent focus:border-[#5046E5] focus:bg-white text-xs sm:text-sm text-slate-800 rounded-xl outline-none transition-all placeholder:text-slate-400 font-medium"
+                      placeholder='Mackbook Pro 2021 14"'
+                      required
+                    />
+                  </div>
+
+                  {/* Field 2: Brand Dropdown */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                      Brand
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={productForm.brand}
+                        onChange={(e) =>
+                          setProductForm({ ...productForm, brand: e.target.value })
+                        }
+                        className="w-full px-4 py-3 bg-[#F8F9FB] border border-transparent focus:border-[#5046E5] focus:bg-white text-xs sm:text-sm text-slate-800 rounded-xl outline-none appearance-none transition-all cursor-pointer font-medium"
+                      >
+                        <option value="Apple">Apple</option>
+                        <option value="Samsung">Samsung</option>
+                        <option value="Sony">Sony</option>
+                        <option value="Nike">Nike</option>
+                      </select>
+                      <ChevronDown
+                        size={16}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Field 3: Price + Negotiable Checkbox */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                      Price
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1">
+                        <input
+                          type="text"
+                          value={productForm.price}
+                          onChange={(e) =>
+                            setProductForm({ ...productForm, price: e.target.value })
+                          }
+                          className="w-full px-4 py-3 bg-[#F8F9FB] border border-transparent focus:border-[#5046E5] focus:bg-white text-xs sm:text-sm text-slate-800 rounded-xl outline-none transition-all font-medium"
+                          placeholder="$1200"
+                        />
+                      </div>
+
+                      {/* Negotiable Checkbox matching Figma */}
+                      <label className="flex items-center gap-2 cursor-pointer select-none">
+                        <div
+                          onClick={() =>
+                            setProductForm({
+                              ...productForm,
+                              negotiable: !productForm.negotiable,
+                            })
+                          }
+                          className={`w-5 h-5 rounded-md flex items-center justify-center transition-colors ${
+                            productForm.negotiable
+                              ? 'bg-[#5046E5] text-white'
+                              : 'border border-slate-300 bg-white'
+                          }`}
+                        >
+                          {productForm.negotiable && (
+                            <Check size={14} strokeWidth={3} />
+                          )}
+                        </div>
+                        <span className="text-xs font-semibold text-slate-700">
+                          Negotiable
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Field 4: Descriptions */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-800 mb-1.5">
+                      Descriptions
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={productForm.description}
+                      onChange={(e) =>
+                        setProductForm({
+                          ...productForm,
+                          description: e.target.value,
+                        })
+                      }
+                      className="w-full px-4 py-3 bg-[#F8F9FB] border border-transparent focus:border-[#5046E5] focus:bg-white text-xs text-slate-700 rounded-xl outline-none transition-all resize-none leading-relaxed font-normal"
+                      placeholder="This the New creation Of apple..."
+                    />
+                  </div>
+                </form>
+              </div>
+
+              {/* Bottom Action Button: Save Product */}
+              <div className="p-6 sm:p-8 pt-0">
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#5046E5] text-white rounded-xl font-bold shadow-md shadow-indigo-100"
+                  form="addProductDrawerForm"
+                  className="w-full py-3.5 px-6 bg-[#5046E5] hover:bg-[#4338CA] text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-indigo-200 flex items-center justify-center gap-2.5 transition-all active:scale-[0.98]"
                 >
-                  Save Product
+                  <Download size={18} className="stroke-[2.2]" />
+                  <span>Save Product</span>
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}

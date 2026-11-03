@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useOutletContext, useSearchParams } from 'react-router-dom';
 import {
   Calendar as CalendarIcon,
   Star,
   MoreHorizontal,
   Trash2,
   Edit2,
-  Check
+  Check,
+  Plus,
+  FileText
 } from 'lucide-react';
 import StatusBadge from '../components/common/StatusBadge';
 import { initialInvoices } from '../data/mockData';
+import CreateInvoice from './CreateInvoice';
 
 export default function Invoices() {
   const { searchTerm, openCreateInvoice } = useOutletContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const viewParam = searchParams.get('view');
+  const [activeTab, setActiveTab] = useState(viewParam === 'create' ? 'create' : 'list');
+
+  useEffect(() => {
+    if (viewParam === 'create') {
+      setActiveTab('create');
+    }
+  }, [viewParam]);
+
   const [invoices, setInvoices] = useState(initialInvoices);
   // Default selected IDs matching Figma Image 3: rows #876213, #876987, #872345, #878769
   const [selectedIds, setSelectedIds] = useState(["876213", "876987", "872345", "878769"]);
@@ -71,11 +84,42 @@ export default function Invoices() {
   };
 
   return (
-    <div className="animate-in fade-in duration-300">
-      {/* Invoices Table Card matching Figma Image 3 & 4 */}
-      <div className="bg-white rounded-3xl border border-[#F1F5F9] shadow-card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[840px]">
+    <div className="space-y-6 animate-in fade-in duration-300">
+      {/* Top Controls: View Switcher between Invoice List & Create Invoice */}
+      <div className="flex items-center justify-between gap-4">
+        <div className="inline-flex bg-white p-1 rounded-2xl border border-[#F1F5F9] shadow-sm">
+          <button
+            type="button"
+            onClick={() => setActiveTab('list')}
+            className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all ${
+              activeTab === 'list'
+                ? 'bg-[#5046E5] text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+            }`}
+          >
+            Invoice List
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('create')}
+            className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all ${
+              activeTab === 'create'
+                ? 'bg-[#5046E5] text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+            }`}
+          >
+            Create Invoice
+          </button>
+        </div>
+      </div>
+
+      {activeTab === 'create' ? (
+        <CreateInvoice />
+      ) : (
+        /* Invoices Table Card matching Figma Image 3 & 4 */
+        <div className="bg-white rounded-3xl border border-[#F1F5F9] shadow-card overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[840px]">
             <thead>
               <tr className="border-b border-gray-100 text-[11px] sm:text-xs font-semibold text-[#94A3B8]">
                 {/* Master Checkbox */}
@@ -258,6 +302,7 @@ export default function Invoices() {
           </table>
         </div>
       </div>
+      )}
     </div>
   );
 }

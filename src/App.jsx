@@ -4,6 +4,7 @@ import DashboardLayout from './components/layout/DashboardLayout';
 import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
 import Invoices from './pages/Invoices';
+import CreateInvoice from './pages/CreateInvoice';
 import Schedule from './pages/Schedule';
 import CalendarPage from './pages/CalendarPage';
 import Messages from './pages/Messages';
@@ -26,6 +27,7 @@ export default function App() {
           <Route index element={<Dashboard />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="invoices" element={<Invoices />} />
+          <Route path="invoices/create" element={<CreateInvoice />} />
           <Route path="schedule" element={<Schedule />} />
           <Route path="calendar" element={<CalendarPage />} />
           <Route path="messages" element={<Messages />} />
