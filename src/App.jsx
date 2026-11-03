@@ -12,6 +12,7 @@ import Notifications from './pages/Notifications';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import Recover from './pages/Recover';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/recover" element={<Recover />} />
 
         {/* Dashboard Core Routes with Shared Layout */}
         <Route path="/" element={<DashboardLayout />}>

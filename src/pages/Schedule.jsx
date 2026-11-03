@@ -16,6 +16,8 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  SlidersHorizontal,
   Check
 } from 'lucide-react';
 import StatusBadge from '../components/common/StatusBadge';
@@ -29,6 +31,7 @@ export default function Schedule() {
   const { searchTerm, openAddTask } = useOutletContext();
   const [viewMode, setViewMode] = useState('List'); // Default to 'List' matching Figma Screenshot 3
   const [listType, setListType] = useState('tasks'); // 'tasks' (Grouped ToDo/Doing/Done) | 'agenda' (Calendar List)
+  const [timelineGroup, setTimelineGroup] = useState('todo'); // 'todo' | 'doing' | 'done'
   const [tasks, setTasks] = useState(initialBoardTasks);
   const [schedules, setSchedules] = useState(initialScheduleList);
   const [selectedScheduleIds, setSelectedScheduleIds] = useState([]);
@@ -182,7 +185,7 @@ export default function Schedule() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Top Header Controls matching Figma Image 3: Task Preview */}
+      {/* Top Header Controls matching Figma: Task Preview */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         {/* View Switcher Pills: List | Board | Timeline */}
         <div className="inline-flex bg-white p-1 rounded-2xl border border-[#F1F5F9] shadow-sm">
@@ -202,21 +205,74 @@ export default function Schedule() {
           ))}
         </div>
 
-        {/* Top Right: Search Box matching Figma media_1793682024889_f6e73101.png */}
+        {/* Top Right Controls by View */}
         <div className="flex items-center gap-3">
-          <div className="relative w-48 sm:w-64">
-            <input
-              type="text"
-              placeholder="Search"
-              value={taskSearch}
-              onChange={(e) => setTaskSearch(e.target.value)}
-              className="w-full pl-4 pr-9 py-2 bg-white border border-[#E2E8F0] focus:border-[#5046E5] rounded-xl text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 shadow-sm outline-none"
-            />
-            <Search
-              size={15}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-            />
-          </div>
+          {viewMode === 'Timeline' ? (
+            <>
+              {/* December 2021 Dropdown Pill */}
+              <div className="relative">
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-white border border-[#E2E8F0] hover:border-slate-300 rounded-xl text-xs sm:text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2 transition-colors"
+                >
+                  <span>December 2021</span>
+                  <ChevronDown size={14} className="text-slate-400" />
+                </button>
+              </div>
+
+              {/* + Add Task Button */}
+              <button
+                type="button"
+                onClick={openAddTask}
+                className="px-4 py-2 bg-[#5046E5] hover:bg-[#4338CA] text-white text-xs sm:text-sm font-semibold rounded-xl shadow-sm flex items-center gap-1.5 transition-all active:scale-[0.98]"
+              >
+                <Plus size={16} />
+                <span>Add Task</span>
+              </button>
+            </>
+          ) : viewMode === 'Board' ? (
+            <>
+              {/* Search Box */}
+              <div className="relative w-44 sm:w-56">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={taskSearch}
+                  onChange={(e) => setTaskSearch(e.target.value)}
+                  className="w-full pl-4 pr-9 py-2 bg-white border border-[#E2E8F0] focus:border-[#5046E5] rounded-xl text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 shadow-sm outline-none"
+                />
+                <Search
+                  size={15}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                />
+              </div>
+
+              {/* Filter Button */}
+              <button
+                type="button"
+                onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+                className="px-4 py-2 bg-[#5046E5] hover:bg-[#4338CA] text-white text-xs sm:text-sm font-semibold rounded-xl shadow-sm flex items-center gap-2 transition-all active:scale-[0.98]"
+              >
+                <span>Filter</span>
+                <SlidersHorizontal size={14} />
+              </button>
+            </>
+          ) : (
+            /* List View Search */
+            <div className="relative w-48 sm:w-64">
+              <input
+                type="text"
+                placeholder="Search"
+                value={taskSearch}
+                onChange={(e) => setTaskSearch(e.target.value)}
+                className="w-full pl-4 pr-9 py-2 bg-white border border-[#E2E8F0] focus:border-[#5046E5] rounded-xl text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 shadow-sm outline-none"
+              />
+              <Search
+                size={15}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -728,47 +784,177 @@ export default function Schedule() {
         </div>
       )}
 
-      {/* VIEW 3: TIMELINE VIEW */}
+      {/* VIEW 3: TIMELINE GANTT VIEW matching Figma media_1793684979195_c4d3f1ea.png "Task preview timeline" */}
       {viewMode === 'Timeline' && (
-        <div className="bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-            <div>
-              <h3 className="font-bold text-base text-[#111827]">
-                Sprint Roadmap & Milestones
-              </h3>
-              <p className="text-xs text-[#64748B]">Q4 Product Engineering Timeline</p>
-            </div>
-            <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-indigo-50 text-indigo-600">
-              Nov 2026 - Dec 2026
-            </span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Sub-Card: To Do, Doing, Done Pill Selectors */}
+          <div className="lg:col-span-3 space-y-3">
+            {[
+              { id: 'todo', label: 'To Do' },
+              { id: 'doing', label: 'Doing' },
+              { id: 'done', label: 'Done' },
+            ].map((grp) => {
+              const isActive = timelineGroup === grp.id;
+              return (
+                <button
+                  key={grp.id}
+                  type="button"
+                  onClick={() => setTimelineGroup(grp.id)}
+                  className={`w-full py-3.5 px-6 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold transition-all ${
+                    isActive
+                      ? 'bg-[#5046E5] text-white shadow-md shadow-indigo-100'
+                      : 'bg-white text-slate-700 border border-[#E2E8F0] hover:bg-slate-50'
+                  }`}
+                >
+                  <span>{grp.label}</span>
+                  <span className={`text-[10px] ${isActive ? 'text-white' : 'text-slate-400'}`}>▶</span>
+                </button>
+              );
+            })}
           </div>
 
-          <div className="space-y-4">
-            {[
-              { title: 'Dashboard UI Revamp', start: '10%', width: '45%', col: '#6366F1', phase: 'Sprint 1' },
-              { title: 'Payment & Invoice Gateway', start: '30%', width: '35%', col: '#10B981', phase: 'Sprint 2' },
-              { title: 'Mobile React Native App', start: '50%', width: '40%', col: '#F59E0B', phase: 'Sprint 3' },
-              { title: 'Security Audit & Compliance', start: '75%', width: '20%', col: '#EC4899', phase: 'Sprint 4' },
-            ].map((item, idx) => (
-              <div key={idx} className="space-y-1.5">
-                <div className="flex justify-between text-xs font-medium text-slate-700">
-                  <span className="font-bold">{item.title}</span>
-                  <span className="text-slate-400">{item.phase}</span>
+          {/* Right Gantt Schedule Grid */}
+          <div className="lg:col-span-9 bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card overflow-x-auto">
+            <div className="min-w-[850px]">
+              {/* Header Days Row: Empty first col for hours + 16 days */}
+              <div className="grid grid-cols-17 gap-1.5 pb-4 border-b border-gray-100 items-center text-center text-xs font-semibold text-slate-400">
+                {/* 1st col: empty */}
+                <div className="col-span-1"></div>
+                {/* 16 Day columns: 9, 30, 01, 02 (solid purple), 03 to 14 */}
+                {['9', '30', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14'].map((dayNum, idx) => (
+                  <div key={idx} className="flex justify-center items-center">
+                    {dayNum === '02' ? (
+                      <span className="w-8 h-8 rounded-lg bg-[#5046E5] text-white font-bold text-xs flex items-center justify-center shadow-sm">
+                        {dayNum}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 font-medium">
+                        {dayNum}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Hourly Grid Rows with Floating Task Cards */}
+              <div className="relative divide-y divide-gray-100 min-h-[500px]">
+                {/* Hourly Slots */}
+                {[
+                  { time: '09.00 AM' },
+                  { time: '10.00 AM' },
+                  { time: '11.00 AM' },
+                  { time: '12.00 PM' },
+                  { time: '01.00 PM' },
+                  { time: '02.00 PM' },
+                  { time: '03.00 PM' },
+                  { time: '04.00 PM' },
+                  { time: '05.00 PM' },
+                ].map((hourSlot, hIdx) => (
+                  <div key={hIdx} className="grid grid-cols-17 gap-1.5 h-14 items-center">
+                    {/* Time Label on left */}
+                    <div className="col-span-1 text-[11px] font-semibold text-slate-400 whitespace-nowrap">
+                      {hourSlot.time}
+                    </div>
+                    {/* Empty Day cells across */}
+                    <div className="col-span-16 h-full"></div>
+                  </div>
+                ))}
+
+                {/* Floating Gantt Task 1: 09.30 AM Grapich Design (approx cols 2 to 9) */}
+                <div
+                  className="absolute left-[16%] right-[42%] top-[14px] bg-white border border-[#E2E8F0] shadow-sm rounded-2xl p-2.5 flex items-center justify-between gap-3 hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-4 h-4 rounded-full border-2 border-slate-300 flex-shrink-0" />
+                    <span className="text-xs font-bold text-slate-800 truncate">Grapich Design</span>
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center -space-x-1.5">
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <div className="w-5 h-5 rounded-full bg-[#00D2D3] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-white">+</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-white bg-[#FF7A59] px-2.5 py-0.5 rounded-full shadow-2xs">Low</span>
+                    <span className="text-[10px] font-bold text-white bg-[#FFB703] px-2.5 py-0.5 rounded-full shadow-2xs">On Track</span>
+                    <MoreHorizontal size={14} className="text-slate-400 hover:text-slate-700" />
+                  </div>
                 </div>
-                <div className="w-full h-8 bg-slate-50 rounded-xl relative overflow-hidden border border-slate-100">
-                  <div
-                    className="absolute top-1 bottom-1 rounded-lg text-white text-[10px] font-bold flex items-center px-3 shadow-sm transition-all duration-300"
-                    style={{
-                      left: item.start,
-                      width: item.width,
-                      backgroundColor: item.col,
-                    }}
-                  >
-                    Active Progress
+
+                {/* Floating Gantt Task 2: 11.00 AM Dashboard Design (approx cols 4 to 12) */}
+                <div
+                  className="absolute left-[26%] right-[25%] top-[125px] bg-white border border-[#E2E8F0] shadow-sm rounded-2xl p-2.5 flex items-center justify-between gap-3 hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-4 h-4 rounded-full bg-[#5046E5] text-white flex items-center justify-center flex-shrink-0">
+                      <Check size={10} strokeWidth={3} />
+                    </div>
+                    <span className="text-xs font-bold text-slate-800 truncate">Dashboard Design</span>
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center -space-x-1.5">
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <div className="w-5 h-5 rounded-full bg-[#00D2D3] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-white">+</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-white bg-[#00D2D3] px-2.5 py-0.5 rounded-full shadow-2xs">High</span>
+                    <span className="text-[10px] font-bold text-white bg-[#FFB703] px-2.5 py-0.5 rounded-full shadow-2xs">On Track</span>
+                    <MoreHorizontal size={14} className="text-slate-400 hover:text-slate-700" />
+                  </div>
+                </div>
+
+                {/* Floating Gantt Task 3: 01.30 PM Logo Design (approx cols 2 to 10) */}
+                <div
+                  className="absolute left-[16%] right-[36%] top-[240px] bg-white border border-[#E2E8F0] shadow-sm rounded-2xl p-2.5 flex items-center justify-between gap-3 hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-4 h-4 rounded-full bg-[#5046E5] text-white flex items-center justify-center flex-shrink-0">
+                      <Check size={10} strokeWidth={3} />
+                    </div>
+                    <span className="text-xs font-bold text-slate-800 truncate">Logo Design</span>
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center -space-x-1.5">
+                      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <div className="w-5 h-5 rounded-full bg-[#00D2D3] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-white">+</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-white bg-[#00D2D3] px-2.5 py-0.5 rounded-full shadow-2xs">High</span>
+                    <span className="text-[10px] font-bold text-white bg-[#FFB703] px-2.5 py-0.5 rounded-full shadow-2xs">On Track</span>
+                    <MoreHorizontal size={14} className="text-slate-400 hover:text-slate-700" />
+                  </div>
+                </div>
+
+                {/* Floating Gantt Task 4: 03.30 PM Web Design (approx cols 6 to 15) */}
+                <div
+                  className="absolute left-[38%] right-[8%] top-[355px] bg-white border border-[#E2E8F0] shadow-sm rounded-2xl p-2.5 flex items-center justify-between gap-3 hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-4 h-4 rounded-full bg-[#5046E5] text-white flex items-center justify-center flex-shrink-0">
+                      <Check size={10} strokeWidth={3} />
+                    </div>
+                    <span className="text-xs font-bold text-slate-800 truncate">Web Design</span>
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center -space-x-1.5">
+                      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop" alt="" className="w-5 h-5 rounded-full object-cover ring-1 ring-white" />
+                      <div className="w-5 h-5 rounded-full bg-[#00D2D3] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-white">+</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-white bg-[#00D2D3] px-2.5 py-0.5 rounded-full shadow-2xs">High</span>
+                    <span className="text-[10px] font-bold text-white bg-[#FFB703] px-2.5 py-0.5 rounded-full shadow-2xs">On Track</span>
+                    <MoreHorizontal size={14} className="text-slate-400 hover:text-slate-700" />
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       )}

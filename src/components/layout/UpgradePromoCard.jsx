@@ -89,7 +89,7 @@ export default function UpgradePromoCard() {
         <button
           type="button"
           onClick={() => alert('Upgrade modal activated!')}
-          className="w-full py-2.5 px-4 bg-[#5B54FE] hover:bg-[#4C45F0] text-white text-[13px] font-semibold rounded-[14px] shadow-sm transition-all duration-200 active:scale-[0.98] tracking-tight"
+          className="w-full py-2.5 px-4 bg-[#5046E5] hover:bg-[#4338CA] text-white text-[13px] font-semibold rounded-[14px] shadow-sm transition-all duration-200 active:scale-[0.98] tracking-tight"
         >
           Upgrade Now
         </button>

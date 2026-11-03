@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import {
   ChevronLeft,
   ChevronRight,
   Plus,
   Search,
-  Check
+  Check,
+  Clock,
+  Calendar as CalendarIcon
 } from 'lucide-react';
 import { schedulePeople } from '../data/mockData';
 import CreateEventModal from '../components/modals/CreateEventModal';
@@ -14,6 +15,7 @@ export default function CalendarPage() {
   const [calendarView, setCalendarView] = useState('Month'); // 'Day' | 'Week' | 'Month' | 'Year'
   const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   const [peopleSearch, setPeopleSearch] = useState('');
+  const [selectedDaySlot, setSelectedDaySlot] = useState(null);
 
   // Days of week
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -217,15 +219,77 @@ export default function CalendarPage() {
     }
   ];
 
+  // Hourly slots for "Day" view matching Figma media_1793684989979_63c3f76c.png "Calendar day"
+  const dayScheduleSlots = [
+    {
+      time: '09.00 AM',
+      event: {
+        text: 'Invited by friends',
+        bg: 'bg-[#FF7A59]',
+        align: 'left',
+      },
+    },
+    { time: '10.00 AM', event: null },
+    { time: '11.00 AM', event: null },
+    {
+      time: '12.00 PM',
+      event: {
+        text: 'Prayer Time',
+        bg: 'bg-[#00D2D3]',
+        align: 'center',
+      },
+    },
+    { time: '01.00 PM', event: null },
+    {
+      time: '02.00 PM',
+      event: {
+        text: 'lunch Time',
+        bg: 'bg-[#FF7A59]',
+        align: 'right',
+      },
+    },
+    { time: '03.00 PM', event: null },
+    { time: '04.00 PM', event: null },
+    { time: '05.00 PM', event: null },
+    {
+      time: '06.00 PM',
+      event: {
+        text: 'Prayer Time',
+        bg: 'bg-[#16A34A]',
+        align: 'left-center',
+      },
+    },
+    { time: '07.00 PM', event: null },
+    { time: '08.00 PM', event: null },
+    {
+      time: '09.00 PM',
+      event: {
+        text: 'Dinner Time',
+        bg: 'bg-[#5046E5]',
+        align: 'right-center',
+      },
+    },
+    { time: '10.00 PM', event: null },
+    { time: '11.00 PM', event: null },
+    { time: '12.00 AM', event: null },
+    { time: '01.00 AM', event: null },
+  ];
+
+  // Filtered people
+  const filteredPeople = schedulePeople.filter(p =>
+    p.name.toLowerCase().includes(peopleSearch.toLowerCase()) ||
+    p.email.toLowerCase().includes(peopleSearch.toLowerCase())
+  );
+
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Top Controls: Calendar Title & Day | Week | Month | Year View Switcher matching Screenshot 4 */}
+      {/* Top Controls: Calendar Title & Day | Week | Month | Year View Switcher matching Figma */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#111827]">
           Calendar
         </h2>
 
-        {/* View Switcher Tabs: Day | Week | Month (active purple) | Year */}
+        {/* View Switcher Tabs: Day | Week | Month | Year */}
         <div className="inline-flex bg-white p-1 rounded-2xl border border-[#F1F5F9] shadow-sm">
           {['Day', 'Week', 'Month', 'Year'].map((tab) => (
             <button
@@ -244,7 +308,7 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      {/* Main Layout: Left Planner Sub-Panel (4 cols) & Calendar Grid (8 cols) matching Screenshot 4 */}
+      {/* Main Layout: Left Planner Sub-Panel (4 cols) & Calendar Grid (8 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Sub-Panel */}
         <div className="lg:col-span-4 bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-6">
@@ -291,132 +355,7 @@ export default function CalendarPage() {
                     const isMuted =
                       (wIdx === 0 && dayNum > 20) || (wIdx === 4 && dayNum < 5);
 
-                    // 12 Months dataset for 2021 matching Figma media_1793680926178_3625fe68.png "Calendar year"
-  const yearMonths2021 = [
-    {
-      name: 'January 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'February 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'March 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'April 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'May 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'Jun 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'July 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'August 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'September 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'October 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'November 2021',
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    },
-    {
-      name: 'December 2021',
-      highlightDay: 2,
-      weeks: [
-        [28, 29, 30, 31, 1, 2, 3],
-        [4, 5, 6, 7, 8, 9, 10],
-        [11, 12, 13, 14, 15, 16, 17],
-        [18, 19, 20, 21, 22, 23, 24],
-        [25, 26, 27, 28, 29, 30, 31],
-      ]
-    }
-  ];
-
-  return (
+                    return (
                       <div
                         key={dIdx}
                         className={`w-7 h-7 mx-auto rounded-full flex items-center justify-center font-medium ${
@@ -454,7 +393,7 @@ export default function CalendarPage() {
             </div>
 
             <div className="space-y-2.5 pt-1">
-              {schedulePeople.map((person) => (
+              {filteredPeople.map((person) => (
                 <div
                   key={person.id}
                   className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer"
@@ -485,9 +424,131 @@ export default function CalendarPage() {
           </button>
         </div>
 
-        {/* Right Calendar Area: Year Grid View OR Month Grid View */}
-        {calendarView === 'Year' ? (
-          /* 12-MONTH YEAR VIEW matching Figma media_1793680926178_3625fe68.png "Calendar year" */
+        {/* Right Calendar Area: Day View | Week View | Month View | Year View */}
+
+        {/* VIEW 1: DAY SCHEDULE VIEW matching Figma media_1793684989979_63c3f76c.png "Calendar day" */}
+        {calendarView === 'Day' && (
+          <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-[#F1F5F9] shadow-card space-y-4">
+            {/* Header: Date with navigation arrows */}
+            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+              <h3 className="font-bold text-base sm:text-lg text-[#111827]">
+                December 2, 2021
+              </h3>
+              <div className="flex items-center gap-1.5 text-slate-400">
+                <button
+                  type="button"
+                  className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700 transition-colors"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button
+                  type="button"
+                  className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700 transition-colors"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
+
+            {/* Hourly Schedule Rows matching exact Figma screenshot */}
+            <div className="divide-y divide-gray-100 pt-1">
+              {dayScheduleSlots.map((slot, sIdx) => {
+                // Compute alignment for event pill
+                let alignClass = 'justify-start pl-8';
+                if (slot.event?.align === 'center') alignClass = 'justify-center';
+                if (slot.event?.align === 'right') alignClass = 'justify-end pr-8';
+                if (slot.event?.align === 'left-center') alignClass = 'justify-start pl-28';
+                if (slot.event?.align === 'right-center') alignClass = 'justify-end pr-28';
+
+                return (
+                  <div
+                    key={sIdx}
+                    className="flex items-center min-h-[46px] py-1.5 group hover:bg-slate-50/50 transition-colors"
+                  >
+                    {/* Time Label on left */}
+                    <div className="w-20 text-[11px] font-semibold text-slate-400 flex-shrink-0">
+                      {slot.time}
+                    </div>
+
+                    {/* Timeline Line & Content Area */}
+                    <div className={`flex-1 flex items-center ${alignClass}`}>
+                      {slot.event && (
+                        <div
+                          className={`px-5 py-2 rounded-xl text-white text-xs font-semibold shadow-sm transition-transform hover:scale-[1.02] cursor-pointer ${slot.event.bg}`}
+                        >
+                          {slot.event.text}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 2: WEEK SCHEDULE VIEW */}
+        {calendarView === 'Week' && (
+          <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-[#F1F5F9] shadow-card space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <h3 className="font-bold text-base text-[#111827]">
+                December 2021 (Week 1)
+              </h3>
+              <div className="flex items-center gap-1.5 text-slate-400">
+                <button type="button" className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700">
+                  <ChevronLeft size={16} />
+                </button>
+                <button type="button" className="p-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-700">
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-7 text-center text-xs font-semibold text-slate-500 py-2 border-b border-gray-100">
+              {['Sun 29', 'Mon 30', 'Tue 01', 'Wed 02', 'Thu 03', 'Fri 04', 'Sat 05'].map((d, i) => (
+                <div key={i} className={`p-1 ${i === 3 ? 'text-[#5046E5] font-bold' : ''}`}>{d}</div>
+              ))}
+            </div>
+
+            <div className="divide-y divide-gray-100">
+              {['09.00 AM', '12.00 PM', '02.00 PM', '06.00 PM', '09.00 PM'].map((t, idx) => (
+                <div key={idx} className="grid grid-cols-7 min-h-[50px] py-1.5 items-center text-center">
+                  <div className="text-[11px] font-semibold text-slate-400 text-left">{t}</div>
+                  <div className="col-span-6 grid grid-cols-6 gap-2">
+                    {idx === 0 && (
+                      <div className="col-start-3 bg-[#FF7A59] text-white text-[11px] font-semibold py-1.5 px-2 rounded-lg shadow-2xs truncate">
+                        Invited by friends
+                      </div>
+                    )}
+                    {idx === 1 && (
+                      <div className="col-start-4 bg-[#00D2D3] text-white text-[11px] font-semibold py-1.5 px-2 rounded-lg shadow-2xs truncate">
+                        Prayer Time
+                      </div>
+                    )}
+                    {idx === 2 && (
+                      <div className="col-start-5 bg-[#FF7A59] text-white text-[11px] font-semibold py-1.5 px-2 rounded-lg shadow-2xs truncate">
+                        lunch Time
+                      </div>
+                    )}
+                    {idx === 3 && (
+                      <div className="col-start-3 bg-[#16A34A] text-white text-[11px] font-semibold py-1.5 px-2 rounded-lg shadow-2xs truncate">
+                        Prayer Time
+                      </div>
+                    )}
+                    {idx === 4 && (
+                      <div className="col-start-5 bg-[#5046E5] text-white text-[11px] font-semibold py-1.5 px-2 rounded-lg shadow-2xs truncate">
+                        Dinner Time
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 3: 12-MONTH YEAR VIEW matching Figma media_1793680926178_3625fe68.png "Calendar year" */}
+        {calendarView === 'Year' && (
           <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-[#F1F5F9] shadow-card">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
               {yearMonths2021.map((m, mIdx) => (
@@ -544,8 +605,10 @@ export default function CalendarPage() {
               ))}
             </div>
           </div>
-        ) : (
-          /* Calendar Month Grid matching Screenshot 4 */
+        )}
+
+        {/* VIEW 4: CALENDAR MONTH GRID matching Figma media_1793682011691_49e07e65.png "Calendar Month" */}
+        {calendarView === 'Month' && (
           <div className="lg:col-span-8 bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-4">
             {/* Calendar Month Header: December 2, 2021 with navigation arrows */}
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
@@ -575,7 +638,7 @@ export default function CalendarPage() {
               ))}
             </div>
 
-            {/* Calendar Month Cells Seamless Table Grid matching Figma media_1793682011691_49e07e65.png */}
+            {/* Calendar Month Cells Seamless Table Grid matching Figma */}
             <div className="border border-gray-100 rounded-2xl overflow-hidden shadow-2xs">
               {monthWeeks.map((week, wIdx) => (
                 <div key={wIdx} className="grid grid-cols-7 border-b border-gray-100 last:border-b-0">
@@ -636,7 +699,7 @@ export default function CalendarPage() {
         )}
       </div>
 
-      {/* Centered Create an Event Modal matching Screenshot 4 */}
+      {/* Centered Create an Event Modal */}
       <CreateEventModal
         isOpen={isEventModalOpen}
         onClose={() => setIsEventModalOpen(false)}
