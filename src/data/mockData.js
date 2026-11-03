@@ -129,7 +129,581 @@ export const topSellingProductsData = [
   },
 ];
 
-// Exact invoices from Figma image 3 & 4
+// Product Analytics Data (from Figma Screenshot 5: Product)
+export const productAnalyticsData = {
+  totalProduct: "5,00,874",
+  newAdded: "+1400 New Added",
+  totalSales: "2,34,888",
+  salesToday: "+1000 Sales Today",
+  productAddByMonth: [
+    { month: "Jan", count: 23400, color: "#FF7A59" },
+    { month: "Feb", count: 15000, color: "#3B82F6" },
+    { month: "Mar", count: 30000, color: "#FF7A59" },
+    { month: "Apr", count: 22000, color: "#3B82F6" },
+    { month: "May", count: 10000, color: "#3B82F6" },
+    { month: "Jun", count: 23400, color: "#FF7A59" },
+    { month: "Jul", count: 5000, color: "#3B82F6" },
+  ],
+  salesAnalyticsBreakdown: [
+    { name: "Total Sales", value: 50, color: "#3B82F6" },
+    { name: "Total Order", value: 30, color: "#FBBF24" },
+    { name: "Order Cancel", value: 20, color: "#FB7185" },
+  ],
+  topSellingProducts: [
+    {
+      sn: 1,
+      name: "Blutooth Devices",
+      price: "$10",
+      totalOrder: "34,666 Piece",
+      totalSales: "$3,46,660",
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop",
+      isMedal: true,
+    },
+    {
+      sn: 2,
+      name: "Airdot",
+      price: "$15",
+      totalOrder: "20,000 Piece",
+      totalSales: "$3,00,000",
+      image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=100&h=100&fit=crop",
+      isMedal: true,
+    },
+    {
+      sn: 3,
+      name: "Shoes",
+      price: "$10",
+      totalOrder: "15,000 Piece",
+      totalSales: "$1,50,000",
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&h=100&fit=crop",
+      isMedal: true,
+    },
+    {
+      sn: 4,
+      name: "Kids T-Shirt",
+      price: "$12",
+      totalOrder: "10,000 Piece",
+      totalSales: "$1,20,000",
+      image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=100&h=100&fit=crop",
+      isMedal: false,
+    },
+    {
+      sn: 5,
+      name: "Smart Watch",
+      price: "$12",
+      totalOrder: "10,000 Piece",
+      totalSales: "$1,20,000",
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&h=100&fit=crop",
+      isMedal: false,
+    },
+    {
+      sn: 6,
+      name: "Girls Top",
+      price: "$12",
+      totalOrder: "10,000 Piece",
+      totalSales: "$1,20,000",
+      image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=100&h=100&fit=crop",
+      isMedal: false,
+    },
+  ]
+};
+
+// Customer List Data (from Figma Screenshot 2 & 3: Customer List)
+export const initialCustomers = [
+  {
+    id: "cust-1",
+    name: "John Deo",
+    role: "UI/UX Designer",
+    email: "johndoe2211@gmail.com",
+    contactEmail: "kajope5182@ummoh.com",
+    phone: "+33757005467",
+    gender: "Male",
+    address: "2239 Hog Camp Road Schaumburg",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.8 },
+      { month: "Feb", val: 2.33, highlighted: true },
+      { month: "Mar", val: 1.9 },
+      { month: "Apr", val: 2.1 },
+      { month: "May", val: 2.6 },
+      { month: "Jun", val: 2.8 },
+    ],
+    ring1: 70,
+    ring2: 60,
+  },
+  {
+    id: "cust-2",
+    name: "Shelby Goode",
+    role: "Visual Artist",
+    email: "shelbygoode481@gmail.com",
+    contactEmail: "shelbygoode@ummoh.com",
+    phone: "+33757005467",
+    gender: "Female",
+    address: "1484 Horizon St Denver",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.2 },
+      { month: "Feb", val: 1.8 },
+      { month: "Mar", val: 2.2 },
+      { month: "Apr", val: 2.0 },
+      { month: "May", val: 2.4 },
+      { month: "Jun", val: 2.5 },
+    ],
+    ring1: 85,
+    ring2: 50,
+  },
+  {
+    id: "cust-3",
+    name: "Robert Bacins",
+    role: "Front-end Dev",
+    email: "robertbacins4182@.com",
+    contactEmail: "robertbacins@ummoh.com",
+    phone: "+33757005467",
+    gender: "Male",
+    address: "782 Orchard Way Austin",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 2.0 },
+      { month: "Feb", val: 2.1 },
+      { month: "Mar", val: 2.4 },
+      { month: "Apr", val: 2.5 },
+      { month: "May", val: 2.8 },
+      { month: "Jun", val: 3.0 },
+    ],
+    ring1: 65,
+    ring2: 75,
+  },
+  {
+    id: "cust-4",
+    name: "John Carilo",
+    role: "Product Owner",
+    email: "john carilo182@.com",
+    contactEmail: "johncarilo@ummoh.com",
+    phone: "+33757805467",
+    gender: "Male",
+    address: "312 Sunset Blvd LA",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.5 },
+      { month: "Feb", val: 1.9 },
+      { month: "Mar", val: 2.3 },
+      { month: "Apr", val: 2.2 },
+      { month: "May", val: 2.7 },
+      { month: "Jun", val: 2.9 },
+    ],
+    ring1: 72,
+    ring2: 64,
+  },
+  {
+    id: "cust-5",
+    name: "Adriene Watson",
+    role: "Project Manager",
+    email: "adrienewatson82@.com",
+    contactEmail: "adrienewatson@ummoh.com",
+    phone: "+83757305467",
+    gender: "Female",
+    address: "902 Broadway St NYC",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.7 },
+      { month: "Feb", val: 2.0 },
+      { month: "Mar", val: 2.5 },
+      { month: "Apr", val: 2.6 },
+      { month: "May", val: 2.8 },
+      { month: "Jun", val: 3.1 },
+    ],
+    ring1: 90,
+    ring2: 80,
+  },
+  {
+    id: "cust-6",
+    name: "Jhon Deo",
+    role: "Fullstack Eng",
+    email: "jhondeo24823@.com",
+    contactEmail: "jhondeo@ummoh.com",
+    phone: "+63475700546",
+    gender: "Male",
+    address: "410 Pine St Seattle",
+    avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.6 },
+      { month: "Feb", val: 2.2 },
+      { month: "Mar", val: 2.1 },
+      { month: "Apr", val: 2.4 },
+      { month: "May", val: 2.5 },
+      { month: "Jun", val: 2.7 },
+    ],
+    ring1: 68,
+    ring2: 55,
+  },
+  {
+    id: "cust-7",
+    name: "Mark Ruffalo",
+    role: "QA Lead",
+    email: "markruffalo3735@.com",
+    contactEmail: "markruffalo@ummoh.com",
+    phone: "+33757005467",
+    gender: "Male",
+    address: "550 Market St SF",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.4 },
+      { month: "Feb", val: 1.9 },
+      { month: "Mar", val: 2.0 },
+      { month: "Apr", val: 2.3 },
+      { month: "May", val: 2.6 },
+      { month: "Jun", val: 2.8 },
+    ],
+    ring1: 74,
+    ring2: 62,
+  },
+  {
+    id: "cust-8",
+    name: "Bethany Jackson",
+    role: "Copywriter",
+    email: "bethanyjackson5@.com",
+    contactEmail: "bethanyjackson@ummoh.com",
+    phone: "+33757005467",
+    gender: "Female",
+    address: "123 Elm St Boston",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.5 },
+      { month: "Feb", val: 2.1 },
+      { month: "Mar", val: 2.3 },
+      { month: "Apr", val: 2.5 },
+      { month: "May", val: 2.7 },
+      { month: "Jun", val: 2.9 },
+    ],
+    ring1: 80,
+    ring2: 70,
+  },
+  {
+    id: "cust-9",
+    name: "Christine Huston",
+    role: "Brand Strategist",
+    email: "christinehuston4@.com",
+    contactEmail: "christine@ummoh.com",
+    phone: "+33757005467",
+    gender: "Male",
+    address: "880 Lakeview Chicago",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.9 },
+      { month: "Feb", val: 2.4 },
+      { month: "Mar", val: 2.6 },
+      { month: "Apr", val: 2.7 },
+      { month: "May", val: 2.9 },
+      { month: "Jun", val: 3.2 },
+    ],
+    ring1: 88,
+    ring2: 72,
+  },
+  {
+    id: "cust-10",
+    name: "Anne Jacob",
+    role: "Operations",
+    email: "annejacob2@ummoh.com",
+    contactEmail: "annejacob@ummoh.com",
+    phone: "+33757005467",
+    gender: "Male",
+    address: "650 Maple St Miami",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 1.3 },
+      { month: "Feb", val: 1.8 },
+      { month: "Mar", val: 2.0 },
+      { month: "Apr", val: 2.2 },
+      { month: "May", val: 2.5 },
+      { month: "Jun", val: 2.7 },
+    ],
+    ring1: 62,
+    ring2: 58,
+  },
+  {
+    id: "cust-11",
+    name: "James Mullican",
+    role: "Growth Hacker",
+    email: "jamesmullican5346@.com",
+    contactEmail: "jamesmullican@ummoh.com",
+    phone: "+33757005467",
+    gender: "Male",
+    address: "220 Cedar Dr Atlanta",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face",
+    performance: [
+      { month: "Jan", val: 2.1 },
+      { month: "Feb", val: 2.5 },
+      { month: "Mar", val: 2.7 },
+      { month: "Apr", val: 2.8 },
+      { month: "May", val: 3.1 },
+      { month: "Jun", val: 3.4 },
+    ],
+    ring1: 76,
+    ring2: 68,
+  },
+];
+
+// Exact Board List / Task Preview from Figma Screenshot 1
+export const initialBoardTasks = {
+  todo: [
+    {
+      id: "task-1",
+      title: "Dashboard Design",
+      checked: false,
+      priority: "Low",
+      status: "On Track",
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      assignees: [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face"
+      ]
+    },
+    {
+      id: "task-2",
+      title: "Landing page Design",
+      checked: false,
+      priority: "Medium",
+      status: "At risk",
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      assignees: [
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face"
+      ]
+    },
+    {
+      id: "task-3",
+      title: "E-Shop Mobile App",
+      checked: false,
+      priority: "High",
+      status: null,
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      assignees: [
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=60&h=60&fit=crop&crop=face"
+      ]
+    },
+    {
+      id: "task-4",
+      title: "Dashboard Design",
+      checked: false,
+      priority: "Low",
+      status: "On Track",
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      assignees: [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+      ]
+    }
+  ],
+  inProgress: [
+    {
+      id: "task-5",
+      title: "Dashboard Design",
+      checked: true,
+      priority: "High",
+      status: "On Track",
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      assignees: [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+      ]
+    },
+    {
+      id: "task-6",
+      title: "Landing page Design",
+      checked: true,
+      priority: "Low",
+      status: null,
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      attachments: [
+        "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=220&h=140&fit=crop",
+        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=220&h=140&fit=crop"
+      ],
+      assignees: [
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face"
+      ]
+    },
+    {
+      id: "task-7",
+      title: "E-Shop Mobile App",
+      checked: false,
+      priority: "Low",
+      status: "On Track",
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      assignees: [
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face"
+      ]
+    }
+  ],
+  inReview: [
+    {
+      id: "task-8",
+      title: "Dashboard Design",
+      checked: true,
+      priority: "Medium",
+      status: null,
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      previewGraphic: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=240&fit=crop",
+      assignees: [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+      ]
+    },
+    {
+      id: "task-9",
+      title: "E-Shop Mobile App",
+      checked: true,
+      priority: "Low",
+      status: null,
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      attachments: [
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=220&h=140&fit=crop",
+        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=220&h=140&fit=crop"
+      ],
+      assignees: [
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
+      ]
+    }
+  ],
+  done: [
+    {
+      id: "task-10",
+      title: "Dashboard Design",
+      checked: true,
+      priority: "High",
+      status: "On Track",
+      description: "Discussion for management dashboard ui design",
+      comments: 112,
+      likes: "1.2k",
+      attachments: [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=220&h=140&fit=crop",
+        "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=220&h=140&fit=crop"
+      ],
+      assignees: [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face"
+      ]
+    }
+  ]
+};
+
+export const initialScheduleList = [
+  {
+    id: "sch-1",
+    date: "12 Dec, 2021",
+    time: "10.15AM",
+    location: "Office Meeting",
+    checked: false,
+  },
+  {
+    id: "sch-2",
+    date: "10 Dec, 2021",
+    time: "11.20AM",
+    location: "Home",
+    checked: false,
+  },
+  {
+    id: "sch-3",
+    date: "09 Dec, 2021",
+    time: "11.45AM",
+    location: "Friends Zone",
+    checked: false,
+  },
+  {
+    id: "sch-4",
+    date: "08 Dec, 2021",
+    time: "12.15PM",
+    location: "Office Meeting",
+    checked: false,
+  },
+  {
+    id: "sch-5",
+    date: "07 Dec, 2021",
+    time: "01.20PM",
+    location: "Home",
+    checked: false,
+  },
+  {
+    id: "sch-6",
+    date: "05 Dec, 2021",
+    time: "10.15AM",
+    location: "Meeting Outside",
+    checked: false,
+  },
+  {
+    id: "sch-7",
+    date: "04 Dec, 2021",
+    time: "11.15AM",
+    location: "Office Meeting",
+    checked: false,
+  },
+  {
+    id: "sch-8",
+    date: "04 Dec, 2021",
+    time: "01.25PM",
+    location: "Home",
+    checked: false,
+  },
+  {
+    id: "sch-9",
+    date: "02 Dec, 2021",
+    time: "10.15AM",
+    location: "Friends",
+    checked: false,
+  },
+  {
+    id: "sch-10",
+    date: "01 Dec, 2021",
+    time: "04.30PM",
+    location: "Meeting Outside",
+    checked: false,
+  },
+];
+
+export const schedulePeople = [
+  {
+    id: 1,
+    name: "Eddie Lobanovskiy",
+    email: "lobanovskiy@gmail.com",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    id: 2,
+    name: "Alexey Stave",
+    email: "alexeyst@gmail.com",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    id: 3,
+    name: "Anton Tkachev",
+    email: "tkachevanton@gmail.com",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+  },
+];
+
+// Exact Invoices from Image 3 & 4
 export const initialInvoices = [
   {
     id: "876364",
@@ -233,249 +807,11 @@ export const initialInvoices = [
   },
 ];
 
-// Exact Schedule List from Figma Image 5
-export const initialScheduleList = [
-  {
-    id: "sch-1",
-    date: "12 Dec, 2021",
-    time: "10.15AM",
-    location: "Office Meeting",
-    checked: false,
-  },
-  {
-    id: "sch-2",
-    date: "10 Dec, 2021",
-    time: "11.20AM",
-    location: "Home",
-    checked: false,
-  },
-  {
-    id: "sch-3",
-    date: "09 Dec, 2021",
-    time: "11.45AM",
-    location: "Friends Zone",
-    checked: false,
-  },
-  {
-    id: "sch-4",
-    date: "08 Dec, 2021",
-    time: "12.15PM",
-    location: "Office Meeting",
-    checked: false,
-  },
-  {
-    id: "sch-5",
-    date: "07 Dec, 2021",
-    time: "01.20PM",
-    location: "Home",
-    checked: false,
-  },
-  {
-    id: "sch-6",
-    date: "05 Dec, 2021",
-    time: "10.15AM",
-    location: "Meeting Outside",
-    checked: false,
-  },
-  {
-    id: "sch-7",
-    date: "04 Dec, 2021",
-    time: "11.15AM",
-    location: "Office Meeting",
-    checked: false,
-  },
-  {
-    id: "sch-8",
-    date: "04 Dec, 2021",
-    time: "01.25PM",
-    location: "Home",
-    checked: false,
-  },
-  {
-    id: "sch-9",
-    date: "02 Dec, 2021",
-    time: "10.15AM",
-    location: "Friends",
-    checked: false,
-  },
-  {
-    id: "sch-10",
-    date: "01 Dec, 2021",
-    time: "04.30PM",
-    location: "Meeting Outside",
-    checked: false,
-  },
-];
-
-// People in schedule sub-panel from Image 5
-export const schedulePeople = [
-  {
-    id: 1,
-    name: "Eddie Lobanovskiy",
-    email: "labanovskiy@gmail.com",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-  },
-  {
-    id: 2,
-    name: "Alexey Stave",
-    email: "alexeyst@gmail.com",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
-  },
-  {
-    id: 3,
-    name: "Anton Tkachev",
-    email: "tkachevanton@gmail.com",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-  },
-];
-
-export const initialBoardTasks = {
-  todo: [
-    {
-      id: "task-1",
-      title: "Dashboard Design",
-      priority: "Low",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 112,
-      likes: "1.2k",
-      assignees: [
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face"
-      ]
-    },
-    {
-      id: "task-2",
-      title: "Landing page Design",
-      priority: "Medium",
-      status: "At risk",
-      description: "Discussion for management dashboard ui design",
-      comments: 84,
-      likes: "890",
-      assignees: [
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
-      ]
-    },
-    {
-      id: "task-3",
-      title: "E-Shop Mobile App",
-      priority: "High",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 65,
-      likes: "450",
-      assignees: [
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=60&h=60&fit=crop&crop=face"
-      ]
-    }
-  ],
-  inProgress: [
-    {
-      id: "task-4",
-      title: "Dashboard Design",
-      priority: "High",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 112,
-      likes: "1.2k",
-      assignees: [
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
-      ]
-    },
-    {
-      id: "task-5",
-      title: "Landing page Design",
-      priority: "Low",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 112,
-      likes: "1.2k",
-      attachments: [
-        "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=200&h=120&fit=crop",
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=120&fit=crop"
-      ],
-      assignees: [
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face"
-      ]
-    },
-    {
-      id: "task-6",
-      title: "E-Shop Mobile App",
-      priority: "Low",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 42,
-      likes: "630",
-      assignees: [
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face"
-      ]
-    }
-  ],
-  inReview: [
-    {
-      id: "task-7",
-      title: "Dashboard Design",
-      priority: "Medium",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 112,
-      likes: "1.2k",
-      previewGraphic: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=350&h=200&fit=crop",
-      assignees: [
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
-      ]
-    },
-    {
-      id: "task-8",
-      title: "E-Shop Mobile App",
-      priority: "Low",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 112,
-      likes: "1.2k",
-      attachments: [
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=120&fit=crop",
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=120&fit=crop"
-      ],
-      assignees: [
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
-      ]
-    }
-  ],
-  done: [
-    {
-      id: "task-9",
-      title: "Dashboard Design",
-      priority: "High",
-      status: "On Track",
-      description: "Discussion for management dashboard ui design",
-      comments: 112,
-      likes: "1.2k",
-      attachments: [
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=120&fit=crop",
-        "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=200&h=120&fit=crop"
-      ],
-      assignees: [
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face",
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face"
-      ]
-    }
-  ]
-};
-
 export const calendarMonthEvents = [
-  { id: 1, day: 4, title: "Design Sprint", category: "Design", color: "#6366F1" },
-  { id: 2, day: 8, title: "Client Sync", category: "Meeting", color: "#3B82F6" },
-  { id: 3, day: 14, title: "Release v2.4", category: "Product", color: "#10B981" },
-  { id: 4, day: 19, title: "Investor Review", category: "Meeting", color: "#F59E0B" },
-  { id: 5, day: 24, title: "Marketing Campaign", category: "Marketing", color: "#EC4899" },
+  { id: 1, day: 2, title: "Free day", category: "Holiday", color: "#00D2D3" },
+  { id: 2, day: 2, title: "Party Time", category: "Social", color: "#EC4899" },
+  { id: 3, day: 16, title: "Victory day", category: "Celebration", color: "#FF7A59" },
+  { id: 4, day: 25, title: "Christmas Day", category: "Holiday", color: "#00D2D3" },
 ];
 
 export const chatConversations = [
@@ -521,21 +857,3 @@ export const chatConversations = [
     ]
   }
 ];
-
-export const analyticsExtendedData = {
-  monthlyRevenue: [
-    { month: "Jan", revenue: 42000, expenses: 18000, profit: 24000 },
-    { month: "Feb", revenue: 56000, expenses: 22000, profit: 34000 },
-    { month: "Mar", revenue: 68000, expenses: 25000, profit: 43000 },
-    { month: "Apr", revenue: 61000, expenses: 21000, profit: 40000 },
-    { month: "May", revenue: 79000, expenses: 28000, profit: 51000 },
-    { month: "Jun", revenue: 95000, expenses: 31000, profit: 64000 },
-    { month: "Jul", revenue: 110000, expenses: 35000, profit: 75000 },
-  ],
-  trafficSources: [
-    { name: "Direct Search", visitors: 45000, percentage: 42, color: "#6366F1" },
-    { name: "Social Media", visitors: 28000, percentage: 26, color: "#3B82F6" },
-    { name: "Referral Sites", visitors: 19000, percentage: 18, color: "#10B981" },
-    { name: "Email Campaigns", visitors: 15000, percentage: 14, color: "#F59E0B" },
-  ]
-};
