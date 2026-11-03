@@ -18,69 +18,77 @@ export default function CalendarPage() {
   // Days of week
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  // December 2021 grid (starts on Wednesday, Dec 1)
-  // Weeks matching Screenshot 4:
+  // December 2021 grid matching Figma media_1793682011691_49e07e65.png "Calendar Month"
   const monthWeeks = [
     [
-      { day: 28, isCurrentMonth: false },
-      { day: 29, isCurrentMonth: false },
-      { day: 30, isCurrentMonth: false },
-      { day: 1, isCurrentMonth: true },
+      { day: 29, display: '29', isCurrentMonth: false },
+      { day: 30, display: '30', isCurrentMonth: false },
+      { day: 1, display: '01', isCurrentMonth: true },
       {
         day: 2,
+        display: '02',
         isCurrentMonth: true,
+        isHighlighted: true,
         events: [
           { text: 'Free day', bg: 'bg-[#00D2D3]' },
           { text: 'Party Time', bg: 'bg-[#EC4899]' },
           { text: 'More', isLink: true },
         ],
       },
-      { day: 3, isCurrentMonth: true },
-      { day: 4, isCurrentMonth: true },
+      { day: 3, display: '03', isCurrentMonth: true },
+      { day: 4, display: '04', isCurrentMonth: true },
+      { day: 5, display: '05', isCurrentMonth: true },
     ],
     [
-      { day: 5, isCurrentMonth: true },
-      { day: 6, isCurrentMonth: true },
-      { day: 7, isCurrentMonth: true },
-      { day: 8, isCurrentMonth: true },
-      { day: 9, isCurrentMonth: true },
-      { day: 10, isCurrentMonth: true },
-      { day: 11, isCurrentMonth: true },
+      { day: 6, display: '06', isCurrentMonth: true },
+      { day: 7, display: '07', isCurrentMonth: true },
+      { day: 8, display: '08', isCurrentMonth: true },
+      { day: 9, display: '09', isCurrentMonth: true },
+      { day: 10, display: '10', isCurrentMonth: true },
+      { day: 11, display: '11', isCurrentMonth: true },
+      { day: 12, display: '12', isCurrentMonth: true },
     ],
     [
-      { day: 12, isCurrentMonth: true },
-      { day: 13, isCurrentMonth: true },
-      { day: 14, isCurrentMonth: true },
-      { day: 15, isCurrentMonth: true },
+      { day: 13, display: '13', isCurrentMonth: true },
+      { day: 14, display: '14', isCurrentMonth: true },
+      { day: 15, display: '15', isCurrentMonth: true },
       {
         day: 16,
+        display: '16',
         isCurrentMonth: true,
         events: [{ text: 'Victory day', bg: 'bg-[#FF7A59]' }],
       },
-      { day: 17, isCurrentMonth: true },
-      { day: 18, isCurrentMonth: true },
+      { day: 17, display: '17', isCurrentMonth: true },
+      { day: 18, display: '18', isCurrentMonth: true },
+      { day: 19, display: '19', isCurrentMonth: true },
     ],
     [
-      { day: 19, isCurrentMonth: true },
-      { day: 20, isCurrentMonth: true },
-      { day: 21, isCurrentMonth: true },
-      { day: 22, isCurrentMonth: true },
-      { day: 23, isCurrentMonth: true },
-      { day: 24, isCurrentMonth: true },
+      { day: 20, display: '20', isCurrentMonth: true },
+      {
+        day: 21,
+        display: '21',
+        isCurrentMonth: true,
+        events: [{ text: 'Invited by friends', bg: 'bg-[#D946EF]' }],
+      },
+      { day: 22, display: '22', isCurrentMonth: true },
+      { day: 23, display: '23', isCurrentMonth: true },
+      { day: 24, display: '24', isCurrentMonth: true },
       {
         day: 25,
+        display: '25',
         isCurrentMonth: true,
         events: [{ text: 'Christmas Day', bg: 'bg-[#00D2D3]' }],
       },
+      { day: 26, display: '26', isCurrentMonth: true },
     ],
     [
-      { day: 26, isCurrentMonth: true },
-      { day: 27, isCurrentMonth: true },
-      { day: 28, isCurrentMonth: true },
-      { day: 29, isCurrentMonth: true },
-      { day: 30, isCurrentMonth: true },
-      { day: 31, isCurrentMonth: true },
-      { day: 1, isCurrentMonth: false },
+      { day: 27, display: '27', isCurrentMonth: true },
+      { day: 28, display: '28', isCurrentMonth: true },
+      { day: 29, display: '29', isCurrentMonth: true },
+      { day: 30, display: '30', isCurrentMonth: true },
+      { day: 31, display: '31', isCurrentMonth: true },
+      { day: 1, display: '01', isCurrentMonth: false },
+      { day: 2, display: '02', isCurrentMonth: false },
     ],
   ];
 
@@ -561,57 +569,64 @@ export default function CalendarPage() {
             </div>
 
             {/* Weekday headers */}
-            <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-500 py-1">
+            <div className="grid grid-cols-7 text-center text-xs font-semibold text-slate-500 py-2 border-b border-gray-100">
               {daysOfWeek.map((day) => (
                 <span key={day}>{day}</span>
               ))}
             </div>
 
-            {/* Calendar Month Cells Grid */}
-            <div className="space-y-2">
+            {/* Calendar Month Cells Seamless Table Grid matching Figma media_1793682011691_49e07e65.png */}
+            <div className="border border-gray-100 rounded-2xl overflow-hidden shadow-2xs">
               {monthWeeks.map((week, wIdx) => (
-                <div key={wIdx} className="grid grid-cols-7 gap-2">
+                <div key={wIdx} className="grid grid-cols-7 border-b border-gray-100 last:border-b-0">
                   {week.map((cell, cIdx) => (
                     <div
                       key={cIdx}
                       onClick={() => setIsEventModalOpen(true)}
-                      className={`h-22 sm:h-26 rounded-2xl p-2 border border-slate-100 hover:border-indigo-200 hover:bg-slate-50/60 transition-all cursor-pointer flex flex-col justify-between ${
-                        !cell.isCurrentMonth ? 'bg-slate-50/30' : 'bg-white'
+                      className={`min-h-[95px] sm:min-h-[110px] p-2 sm:p-2.5 border-r border-gray-100 last:border-r-0 hover:bg-slate-50/60 transition-all cursor-pointer flex flex-col items-center justify-start relative ${
+                        !cell.isCurrentMonth ? 'bg-slate-50/20' : 'bg-white'
                       }`}
                     >
+                      {/* Coral Accent Line on top of Day 02 */}
+                      {cell.isHighlighted && (
+                        <div className="absolute top-0 left-2 right-2 h-0.5 bg-[#FF7A59]" />
+                      )}
+
+                      {/* Day Number */}
                       <span
-                        className={`text-xs font-bold ${
+                        className={`text-xs sm:text-sm font-bold pt-0.5 ${
                           !cell.isCurrentMonth
                             ? 'text-slate-300'
-                            : cell.day === 2
+                            : cell.isHighlighted
                             ? 'text-[#FF7A59]'
-                            : 'text-slate-700'
+                            : 'text-[#1E293B]'
                         }`}
                       >
-                        {cell.day < 10 && cell.isCurrentMonth ? `0${cell.day}` : cell.day}
+                        {cell.display}
                       </span>
 
-                      {/* Event Badges on Cell */}
-                      <div className="space-y-1">
-                        {cell.events &&
-                          cell.events.map((ev, eIdx) =>
+                      {/* Event Badges Centered Underneath */}
+                      {cell.events && (
+                        <div className="w-full flex flex-col items-center space-y-1 mt-1.5">
+                          {cell.events.map((ev, eIdx) =>
                             ev.isLink ? (
                               <span
                                 key={eIdx}
-                                className="text-[10px] text-indigo-600 font-semibold block"
+                                className="text-[10px] text-[#3B82F6] font-medium pt-0.5 hover:underline"
                               >
                                 More
                               </span>
                             ) : (
                               <div
                                 key={eIdx}
-                                className={`text-[10px] font-bold text-white px-1.5 py-0.5 rounded-lg truncate shadow-2xs ${ev.bg}`}
+                                className={`text-[9px] sm:text-[10px] font-bold text-white px-2 py-0.5 rounded-sm shadow-2xs w-full max-w-[85px] text-center truncate ${ev.bg}`}
                               >
                                 {ev.text}
                               </div>
                             )
                           )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -40,7 +40,7 @@ export default function Header({
       case '/invoices/create':
         return 'Create Invoice';
       case '/schedule':
-        return 'Schedule List';
+        return 'Task Preview';
       case '/calendar':
         return 'Calendar';
       case '/messages':
@@ -125,7 +125,7 @@ export default function Header({
             </div>
           )}
 
-          {/* SCHEDULE LIST: Add New Button */}
+          {/* SCHEDULE / TASK PREVIEW: Add Task Button matching Figma */}
           {location.pathname === '/schedule' && (
             <button
               type="button"
@@ -133,7 +133,7 @@ export default function Header({
               className="flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-[#5046E5] hover:bg-[#4338CA] rounded-xl shadow-sm shadow-indigo-200 transition-all active:scale-95 whitespace-nowrap"
             >
               <Plus size={16} />
-              <span>Add New</span>
+              <span>Add Task</span>
             </button>
           )}
 
