@@ -13,7 +13,7 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/');
+    navigate('/confirm');
   };
 
   return (
