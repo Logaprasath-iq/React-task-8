@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import {
   Package,
   ShoppingCart,
-  TrendingUp,
   MoreHorizontal,
   Plus,
   Award,
-  ChevronDown,
   Activity
 } from 'lucide-react';
 import {
@@ -24,16 +22,16 @@ export default function ProductAnalyticsView() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Subheader: Product | Customer Tabs & + Add Product Button matching Screenshot 5 */}
+      {/* Top Controls: Product | Customer Pill Tabs & + Add Product Button matching Figma */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        {/* Subheader tabs */}
+        {/* Floating Pill Switcher matching user uploaded closeup */}
         <div className="inline-flex bg-white p-1 rounded-2xl border border-[#F1F5F9] shadow-sm">
           {['Product', 'Customer'].map((tab) => (
             <button
               key={tab}
               type="button"
               onClick={() => setActiveSubTab(tab)}
-              className={`px-6 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all ${
+              className={`px-6 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 ${
                 activeSubTab === tab
                   ? 'bg-[#5046E5] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
@@ -55,98 +53,130 @@ export default function ProductAnalyticsView() {
         </button>
       </div>
 
-      {/* Row 1: Two KPI Sparkline Cards */}
+      {/* Row 1: The Two Hero Stat Cards matching user uploaded closeup */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Total Product Card */}
-        <div className="bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-start justify-between">
+        {/* Card 1: Total Product (5,00,874 with blue wave) */}
+        <div className="bg-white rounded-[26px] border border-[#F1F5F9] shadow-card relative overflow-hidden flex flex-col justify-between pt-6">
+          <div className="px-6 flex items-start justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center flex-shrink-0">
-                <Package size={22} />
+              {/* Soft circular icon container */}
+              <div className="w-14 h-14 rounded-full bg-[#F2F6FE] text-[#3B82F6] flex items-center justify-center flex-shrink-0 shadow-2xs">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" fill="#3B82F6" fillOpacity="0.2" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="m3.3 7 8.7 5 8.7-5" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 22V12" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </div>
+
               <div>
-                <p className="text-xs font-medium text-[#64748B]">Total Product</p>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight mt-0.5">
-                  {productAnalyticsData.totalProduct}
+                <p className="text-xs font-semibold text-[#64748B]">Total Product</p>
+                <h3 className="text-2xl sm:text-[28px] font-extrabold text-[#111827] tracking-tight mt-0.5">
+                  5,00,874
                 </h3>
               </div>
             </div>
 
-            <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">
-              {productAnalyticsData.newAdded}
+            {/* Plain Green Text matching closeup */}
+            <span className="text-[12px] font-semibold text-[#10B981] pt-1">
+              +1400 New Added
             </span>
           </div>
 
-          {/* Blue Sparkline Wave Vector */}
-          <div className="w-full h-12 mt-4">
-            <svg viewBox="0 0 400 60" className="w-full h-full preserve-3d" fill="none">
-              <path
-                d="M 0 45 C 50 45, 70 25, 120 35 C 170 45, 200 15, 260 20 C 320 25, 350 48, 400 40"
-                stroke="#3B82F6"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-              <path
-                d="M 0 45 C 50 45, 70 25, 120 35 C 170 45, 200 15, 260 20 C 320 25, 350 48, 400 40 L 400 60 L 0 60 Z"
-                fill="url(#blueWaveGlow)"
-              />
+          {/* Edge-to-Edge Blue Smooth Spline Wave Vector */}
+          <div className="w-full h-16 mt-2 overflow-hidden leading-none -mb-1">
+            <svg
+              viewBox="0 0 400 80"
+              preserveAspectRatio="none"
+              className="w-full h-full"
+              fill="none"
+            >
               <defs>
                 <linearGradient id="blueWaveGlow" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.15" />
-                  <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.0" />
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.2" />
+                  <stop offset="60%" stopColor="#60A5FA" stopOpacity="0.08" />
+                  <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.0" />
                 </linearGradient>
               </defs>
+
+              {/* Shaded Area Underneath */}
+              <path
+                d="M 0 60 C 35 60, 50 48, 75 48 C 105 48, 125 58, 145 54 C 175 46, 185 24, 215 24 C 245 24, 260 48, 290 48 C 325 48, 350 24, 400 12 L 400 80 L 0 80 Z"
+                fill="url(#blueWaveGlow)"
+              />
+
+              {/* Blue Wave Line Stroke */}
+              <path
+                d="M 0 60 C 35 60, 50 48, 75 48 C 105 48, 125 58, 145 54 C 175 46, 185 24, 215 24 C 245 24, 260 48, 290 48 C 325 48, 350 24, 400 12"
+                stroke="#4D88FF"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                fill="none"
+              />
             </svg>
           </div>
         </div>
 
-        {/* Total Sales Card */}
-        <div className="bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-start justify-between">
+        {/* Card 2: Total Sales (2,34,888 with yellow wave) */}
+        <div className="bg-white rounded-[26px] border border-[#F1F5F9] shadow-card relative overflow-hidden flex flex-col justify-between pt-6">
+          <div className="px-6 flex items-start justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
-                <ShoppingCart size={22} />
+              {/* Soft yellow circular icon container */}
+              <div className="w-14 h-14 rounded-full bg-[#FEF9E7] text-[#F59E0B] flex items-center justify-center flex-shrink-0 shadow-2xs">
+                <ShoppingCart size={22} className="stroke-[2.2] fill-[#F59E0B]/20" />
               </div>
+
               <div>
-                <p className="text-xs font-medium text-[#64748B]">Total Sales</p>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight mt-0.5">
-                  {productAnalyticsData.totalSales}
+                <p className="text-xs font-semibold text-[#64748B]">Total Sales</p>
+                <h3 className="text-2xl sm:text-[28px] font-extrabold text-[#111827] tracking-tight mt-0.5">
+                  2,34,888
                 </h3>
               </div>
             </div>
 
-            <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">
-              {productAnalyticsData.salesToday}
+            {/* Plain Green Text matching closeup */}
+            <span className="text-[12px] font-semibold text-[#10B981] pt-1">
+              +1000 Sales Today
             </span>
           </div>
 
-          {/* Yellow Sparkline Wave Vector */}
-          <div className="w-full h-12 mt-4">
-            <svg viewBox="0 0 400 60" className="w-full h-full preserve-3d" fill="none">
-              <path
-                d="M 0 40 C 50 40, 80 50, 140 45 C 200 40, 240 18, 300 25 C 340 30, 370 45, 400 40"
-                stroke="#F59E0B"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-              <path
-                d="M 0 40 C 50 40, 80 50, 140 45 C 200 40, 240 18, 300 25 C 340 30, 370 45, 400 40 L 400 60 L 0 60 Z"
-                fill="url(#yellowWaveGlow)"
-              />
+          {/* Edge-to-Edge Yellow Smooth Spline Wave Vector */}
+          <div className="w-full h-16 mt-2 overflow-hidden leading-none -mb-1">
+            <svg
+              viewBox="0 0 400 80"
+              preserveAspectRatio="none"
+              className="w-full h-full"
+              fill="none"
+            >
               <defs>
                 <linearGradient id="yellowWaveGlow" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.15" />
-                  <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.0" />
+                  <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.22" />
+                  <stop offset="60%" stopColor="#FBBF24" stopOpacity="0.08" />
+                  <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.0" />
                 </linearGradient>
               </defs>
+
+              {/* Shaded Area Underneath */}
+              <path
+                d="M 0 48 C 35 48, 55 42, 80 40 C 110 38, 130 50, 160 48 C 190 46, 205 24, 235 22 C 265 20, 275 42, 305 48 C 335 54, 365 44, 400 32 L 400 80 L 0 80 Z"
+                fill="url(#yellowWaveGlow)"
+              />
+
+              {/* Yellow Wave Line Stroke */}
+              <path
+                d="M 0 48 C 35 48, 55 42, 80 40 C 110 38, 130 50, 160 48 C 190 46, 205 24, 235 22 C 265 20, 275 42, 305 48 C 335 54, 365 44, 400 32"
+                stroke="#FBBF24"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                fill="none"
+              />
             </svg>
           </div>
         </div>
       </div>
 
-      {/* Row 2: Top Selling Products Table (Left 7 cols) & Right Charts (Right 5 cols) */}
+      {/* Row 2: Top Selling Products Table (7 cols) & Charts (5 cols) matching Screenshot 5 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left: Top Selling Products Table matching Screenshot 5 */}
+        {/* Left: Top Selling Products Table */}
         <div className="lg:col-span-7 bg-white rounded-3xl p-6 border border-[#F1F5F9] shadow-card space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-gray-50">
             <h3 className="font-bold text-base text-[#111827]">
